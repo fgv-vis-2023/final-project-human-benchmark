@@ -10,7 +10,16 @@
         <script src = "https://d3js.org/d3.v4.min.js"></script>
     </head>
 <body>
-    <h1>Testando firebase 9</h1>
+    <h2>Firebase Auth:</h2>
+    <form class="signup">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+    
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+    
+        <button type="submit">Sign Up</button>
+    </form>
 
     <form class="add">
         <label for="Username">Username:</label>
@@ -35,6 +44,19 @@
         <input type="text" id="id" name="id" required>
 
         <button>delete your data</button>
+    </form>
+
+    <form class="update">
+        <label for="id">Document ID:</label>
+        <input type="text" id="id" name="id" required>
+
+        <label for="field">Field to update:</label>
+        <input type="text" id="field" name="field" required>
+
+        <label for="value">New value:</label>
+        <input type="text" id="value" name="value" required>
+
+        <button>update your document</button>
     </form>
 
 
