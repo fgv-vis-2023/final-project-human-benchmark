@@ -11,6 +11,8 @@
     </head>
 <body>
     <h2>Firebase Auth:</h2>
+    <!-- <button class="generate">Generate 100 random users with scores</button> -->
+    
     <form class="signup">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email">
@@ -21,10 +23,19 @@
         <button type="submit">Sign Up</button>
     </form>
 
-    <form class="add">
-        <label for="Username">Username:</label>
-        <input type="text" id="Username" name="Username" placeholder="Username">
+    <form class="login">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
     
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+    
+        <button>Login</button>
+    </form>
+
+    <button class="logout">Logout</button>
+
+    <form class="add">   
         <label for="Score on game 1:">Score on game 1:</label>
         <input type="text" id="Game 1 Score" name="Score on game 1:" required>
         <label for="Score on game 2:">Score on game 2:</label>
@@ -58,6 +69,33 @@
 
         <button>update your document</button>
     </form>
+
+    <form class="consult">
+        <label for="gameid">Specify game number:</label>
+        <input type="text" id="gameid" name="gameid" required>
+        <label for="email">Get scores of a specific user:</label>
+        <input type="text" id="email" name="email" required>
+        <button>Get Scores!</button>
+    </form>
+
+    <!-- Gráficos -->
+    <div class="container" id="mainView">
+        <!-- <svg viewBox="0 0 376 508">
+            <rect x="0" y="0" width="200" height="100" rx="10" fill="Lavender" />
+            <text x="8" y="8" font-size="5" font-family="Open Sans, Helvetica" fill="Gray" id="radialTitle">Radial Plot</text>
+            <clipPath id="radialPlotClip">
+                <rect x="0" y="0" width="376" height="508" rx="15" fill="Lavender" />
+            </clipPath>
+            <g clip-path="url(#radialPlotClip)">
+                <g transform="translate(10, 10)" id="radialPlotGroup" ></g>
+            </g>
+            <div class="tooltip" id="radialTooltip">
+            </div>
+        </svg> -->
+        <div class="radial" id="radial"></div>
+    </div>
+
+    
 
 
 </body>

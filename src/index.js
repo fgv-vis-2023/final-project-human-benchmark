@@ -1,22 +1,26 @@
 // run 'npm run build' to bundle this file
+import { sampleNormal, sampleScore } from './aux.js';
 import { initializeApp } from "firebase/app";
 import {
   getFirestore, collection, getDocs, onSnapshot,
   addDoc, deleteDoc, doc, query, where, orderBy, serverTimestamp,
-  getDoc, updateDoc
+  getDoc, updateDoc, limit
 } from "firebase/firestore";
 import {
-  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  getAuth, createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword
 } from "firebase/auth";
+import * as d3 from 'd3';
+
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBJnXNrYtlXC-DybP5MAJZXuYKHqcczpoE",
-    authDomain: "mind-track-778eb.firebaseapp.com",
-    projectId: "mind-track-778eb",
-    storageBucket: "mind-track-778eb.appspot.com",
-    messagingSenderId: "960246747563",
-    appId: "1:960246747563:web:f659460f312b7fd89b42ee"
-  };
+  apiKey: "AIzaSyBJnXNrYtlXC-DybP5MAJZXuYKHqcczpoE",
+  authDomain: "mind-track-778eb.firebaseapp.com",
+  projectId: "mind-track-778eb",
+  storageBucket: "mind-track-778eb.appspot.com",
+  messagingSenderId: "960246747563",
+  appId: "1:960246747563:web:f659460f312b7fd89b42ee"
+};
+
 
 initializeApp(firebaseConfig);
 
@@ -57,7 +61,7 @@ sendData.addEventListener('submit', (e) => {
   e.preventDefault()  // stops page from reloading
 
   addDoc(colRef, {
-    Username: sendData.Username.value,
+    Username: auth.currentUser.email,
     "Game 1 Score": sendData["Game 1 Score"].value,
     "Game 2 Score": sendData["Game 2 Score"].value,
     "Game 3 Score": sendData["Game 3 Score"].value,
@@ -123,7 +127,185 @@ signupForm.addEventListener('submit', (e) => {
       signupForm.reset()
     })
     .catch((error) => {
-      console.log(error.message)
+      alert(error.message)
     })
-
 })
+
+const logoutButton = document.querySelector('.logout');
+logoutButton.addEventListener('click', () => {
+  signOut(auth)
+    .then(() => {
+      console.log('User signed out')
+    })
+    .catch((error) => {
+      alert(error.message)
+    })
+})
+
+const loginForm = document.querySelector('.login');
+loginForm.addEventListener('submit', (e) => {
+  e.preventDefault()
+
+  signInWithEmailAndPassword(auth, loginForm.email.value, loginForm.password.value)
+    .then((userCredential) => { 
+      console.log('User signed in', userCredential.user)
+      loginForm.reset()
+    })
+    .catch((error) => {
+      alert(error.message)
+    })
+})
+
+// // function to generate score data for a specific game game
+// const generate = document.querySelector('.generate');
+// generate.addEventListener('click', () => {
+//   // function that generates 100 random usernames, with scores for each game
+//   const colRef = collection(db, 'testgame5');  // connect to collection 'users'
+//   for (let i = 0; i < 10; i++) {
+//     let score = sampleScore(40, 25)
+//     for (let j = 0; j < 50; j++) {
+//       addDoc(colRef, {
+//         Username: "User" + i + "@gmail.com",
+//         "Score": ~~score,
+//         createdAt: serverTimestamp(),
+//       })
+//       score = score + sampleNormal(3, 2)
+//       score = Math.min(score, 100)
+//     }
+//   }
+// })
+
+// const generate = document.querySelector('.generate');
+// generate.addEventListener('click', () => {
+//   // function that generates 100 random usernames, with scores for each game
+//   const colRef = collection(db, 'mock');  // connect to collection 'users'
+//   for (let i = 0; i < 20; i++) {
+//     let score1 = sampleScore(60, 15)
+//     let score2 = sampleScore(50, 20)
+//     let score3 = sampleScore(55, 25)
+//     let score4 = sampleScore(75, 10)
+//     let score5 = sampleScore(80, 20)
+//     for (let j = 0; j < 50; j++) {
+//       addDoc(colRef, {
+//         usuario: "User" + i + "@gmail.com",
+//         jogo1: Math.min(~~(score1 + j*sampleNormal(1, 0.7)), 100),
+//         jogo2: Math.min(~~(score2 + j*sampleNormal(1.5, 1)), 100),
+//         jogo3: Math.min(~~(score3 + j*sampleNormal(1.2, 0.7)), 100),
+//         jogo4: Math.min(~~(score4 + j*sampleNormal(0.5, 0.5)), 100),
+//         jogo5: Math.min(~~(score5 + j*sampleNormal(0.5, 0.5)), 100),
+//         dia: serverTimestamp(),
+//         sono: ~~sampleScore(7, 1.5),
+//         exercicio: ~~sampleScore(1, 2),
+//         emocao: ~~sampleScore(3, 2)
+//       })
+//     }
+//   }
+// })
+
+// logic to get scores of a specific user in a game
+const userquery = document.querySelector('.consult');
+userquery.addEventListener('submit', (e) => {
+  e.preventDefault()
+  const scores = collection(db, 'mock');  // connect to specific game collection 
+  
+  const qScores = query(scores, 
+                        where("usuario", "==", userquery.email.value))  // make queries
+  
+  onSnapshot(qScores, (snapshot) => {
+    let userscores = []
+    snapshot.docs.forEach((doc) => {
+      userscores.push({"score": doc.data()[`jogo${userquery.gameid.value}`],
+                        // "jogo2": doc.data().jogo2,
+                        // "jogo3": doc.data().jogo3,
+                        // "jogo4": doc.data().jogo4,
+                        // "jogo5": doc.data().jogo5,
+                        "emocao": doc.data().emocao,
+                        "exercicio": doc.data().exercicio,
+                        "sono": doc.data().sono, 
+                        "dia": doc.data().dia})
+                      })
+                      userscores = userscores.sort(function(a, b){
+                        if (a.dia > b.dia) {return 1}
+                        return -1
+                      })
+                      console.log(userscores)
+                    })
+                  })
+                  
+// Radial graph
+
+const email = 'User2@gmail.com'
+
+const scores = collection(db, 'mock');  // connect to specific game collection
+const qScores = query(scores, limit(5), orderBy('dia', 'desc'), where("usuario", "==", email))
+
+let radialGraph = onSnapshot(qScores, (snapshot) => {
+  const data = snapshot.docs.map((doc) => doc.data());
+  plotRadialGraph(data);
+});
+radialGraph;
+
+
+
+const plotRadialGraph = (data) => {
+  const svgRadialWidth = 800;
+  const svgRadialHeight = 600;
+  
+  const svgRadial = d3
+    .select(".radial")
+    .append('svg')
+    .attr('width', svgRadialWidth)
+    .attr('height', svgRadialHeight)
+    .attr('rx', 20)
+    .style('border', '2px solid gray'); // Chart border
+    
+  const margin = { top: 20, right: 20, bottom: 100, left: 100 };
+  const chartRadialWidth = svgRadialWidth - margin.left - margin.right;
+  const chartRadialHeight = svgRadialHeight - margin.top - margin.bottom;
+  
+  const chartRadial = svgRadial
+    .append('g')
+    .attr('width', chartRadialWidth)
+    .attr('height', chartRadialHeight)
+    .attr('transform', `translate(${margin.left}, ${margin.top}`);
+  
+  const xAxisRadialGroup = chartRadial.append('g').attr('transform', `translate(0, ${chartRadialHeight})`);
+  const yAxisRadialGroup = chartRadial.append('g');
+  
+  const xScaleRadial = d3.scaleBand().range([0, chartRadialWidth]).paddingInner(0.2).paddingOuter(0.2);
+  const yScaleRadial = d3.scaleLinear().range([chartRadialHeight, margin.top]);
+  
+  const xAxisRadial = d3.axisBottom(xScaleRadial);
+  const yAxisRadial = d3.axisLeft(yScaleRadial).ticks(10);
+  xScaleRadial.domain(data.map((d) => d.dia));
+  yScaleRadial.domain([0, d3.max(data, (d) => d.jogo1)]);
+
+  const rects = chartRadial.selectAll('rect').data(data);
+
+  // rects.exit().remove();
+
+  rects
+    .enter()
+    .append('rect')
+    .attr('width', xScaleRadial.bandwidth)
+    .attr('height', (d) => chartRadialHeight - yScaleRadial(d.jogo1))
+    .attr('x', (d) => xScaleRadial(d.dia))
+    .attr('y', (d) => yScaleRadial(d.jogo1))
+    .style('fill', 'rebeccapurple');
+
+  xAxisRadialGroup.call(xAxisRadial);
+  yAxisRadialGroup.call(yAxisRadial);
+
+  xAxisRadialGroup
+    .selectAll('text')
+    .attr('text-anchor', 'end')
+    .attr('transform', 'rotate(-40)')
+    .attr('fill', 'rebeccapurple')
+    .attr('font-size', '0.5rem');
+
+  yAxisRadialGroup
+    .selectAll('text')
+    .attr('text-anchor', 'end')
+    .attr('fill', 'rebeccapurple')
+    .attr('font-size', '0.75rem');
+};
