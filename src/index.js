@@ -10,6 +10,7 @@ import {
   getAuth, createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword
 } from "firebase/auth";
 import * as d3 from 'd3';
+import { RadarChart } from './radarChart.js';
 
 
 const firebaseConfig = {
@@ -234,78 +235,47 @@ userquery.addEventListener('submit', (e) => {
                   
 // Radial graph
 
-const email = 'User2@gmail.com'
+const email = 'User8@gmail.com'
 
 const scores = collection(db, 'mock');  // connect to specific game collection
 const qScores = query(scores, limit(5), orderBy('dia', 'desc'), where("usuario", "==", email))
 
+var margin = {top: 100, right: 100, bottom: 100, left: 100},
+width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
+height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+
+var radarChartOptions = {
+  w: width,
+  h: height,
+  margin: margin,
+  maxValue: 0.5,
+  levels: 5,
+  roundStrokes: true,
+  color: d3.scaleOrdinal().range(['#94003a', '#ae3e52', '#c9676c', '#e28d87', '#fbb4a2'].reverse()),
+  opacityArea: 0,
+  strokeWidth: 2,
+  dotRadius: 4,
+};
+
 let radialGraph = onSnapshot(qScores, (snapshot) => {
+  let userscores = []
+  snapshot.docs.forEach((doc, i) => {
+    userscores.push({"key": "Dia "+(5-i).toString(), "values": [
+      {axis: "Score no jogo 1", value: Math.max(doc.data().jogo1*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i},
+      {axis: "Score no jogo 2", value: Math.max(doc.data().jogo2*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i},
+      {axis: "Score no jogo 3", value: Math.max(doc.data().jogo3*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i},
+      {axis: "Score no jogo 4", value: Math.max(doc.data().jogo4*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i},
+      {axis: "Score no jogo 5", value: Math.max(doc.data().jogo5*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i}
+    ]})
+})
+  let userscores_inv = userscores.reverse()
+  // userscores = userscores.map((doc) => doc.slice(1, 6))
   const data = snapshot.docs.map((doc) => doc.data());
-  plotRadialGraph(data);
+  console.log(data)
+  console.log(userscores_inv)
+
+  //Call function to draw the Radar chart
+  RadarChart(".radarChart", userscores, radarChartOptions);
+  
 });
 radialGraph;
-
-
-
-const plotRadialGraph = (data) => {
-  const svgRadialWidth = 800;
-  const svgRadialHeight = 600;
-  
-  const svgRadial = d3
-    .select(".radial")
-    .append('svg')
-    .attr('width', svgRadialWidth)
-    .attr('height', svgRadialHeight)
-    .attr('rx', 20)
-    .style('border', '2px solid gray'); // Chart border
-    
-  const margin = { top: 20, right: 20, bottom: 100, left: 100 };
-  const chartRadialWidth = svgRadialWidth - margin.left - margin.right;
-  const chartRadialHeight = svgRadialHeight - margin.top - margin.bottom;
-  
-  const chartRadial = svgRadial
-    .append('g')
-    .attr('width', chartRadialWidth)
-    .attr('height', chartRadialHeight)
-    .attr('transform', `translate(${margin.left}, ${margin.top}`);
-  
-  const xAxisRadialGroup = chartRadial.append('g').attr('transform', `translate(0, ${chartRadialHeight})`);
-  const yAxisRadialGroup = chartRadial.append('g');
-  
-  const xScaleRadial = d3.scaleBand().range([0, chartRadialWidth]).paddingInner(0.2).paddingOuter(0.2);
-  const yScaleRadial = d3.scaleLinear().range([chartRadialHeight, margin.top]);
-  
-  const xAxisRadial = d3.axisBottom(xScaleRadial);
-  const yAxisRadial = d3.axisLeft(yScaleRadial).ticks(10);
-  xScaleRadial.domain(data.map((d) => d.dia));
-  yScaleRadial.domain([0, d3.max(data, (d) => d.jogo1)]);
-
-  const rects = chartRadial.selectAll('rect').data(data);
-
-  // rects.exit().remove();
-
-  rects
-    .enter()
-    .append('rect')
-    .attr('width', xScaleRadial.bandwidth)
-    .attr('height', (d) => chartRadialHeight - yScaleRadial(d.jogo1))
-    .attr('x', (d) => xScaleRadial(d.dia))
-    .attr('y', (d) => yScaleRadial(d.jogo1))
-    .style('fill', 'rebeccapurple');
-
-  xAxisRadialGroup.call(xAxisRadial);
-  yAxisRadialGroup.call(yAxisRadial);
-
-  xAxisRadialGroup
-    .selectAll('text')
-    .attr('text-anchor', 'end')
-    .attr('transform', 'rotate(-40)')
-    .attr('fill', 'rebeccapurple')
-    .attr('font-size', '0.5rem');
-
-  yAxisRadialGroup
-    .selectAll('text')
-    .attr('text-anchor', 'end')
-    .attr('fill', 'rebeccapurple')
-    .attr('font-size', '0.75rem');
-};
