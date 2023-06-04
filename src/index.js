@@ -7,11 +7,12 @@ import {
   getDoc, updateDoc, limit
 } from "firebase/firestore";
 import {
-  getAuth, createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword
+  getAuth, createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, onAuthStateChanged
 } from "firebase/auth";
 import * as d3 from 'd3';
 import { RadarChart } from './radarChart.js';
-
+import 'parcoord-es/dist/parcoords.css';
+import ParCoords from 'parcoord-es';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJnXNrYtlXC-DybP5MAJZXuYKHqcczpoE",
@@ -27,6 +28,7 @@ initializeApp(firebaseConfig);
 
 const db = getFirestore();  // connect to firestore
 const auth = getAuth();  // connect to auth
+
 
 const colRef = collection(db, 'tests');  // connect to collection 'users'
 
@@ -235,27 +237,30 @@ userquery.addEventListener('submit', (e) => {
                   
 // Radial graph
 
-const email = 'User8@gmail.com'
 
-const scores = collection(db, 'mock');  // connect to specific game collection
-const qScores = query(scores, limit(5), orderBy('dia', 'desc'), where("usuario", "==", email))
+var radarmargin = {top: 100, right: 100, bottom: 100, left: 100},
+radarwidth = Math.min(700, window.innerWidth - 10) - radarmargin.left - radarmargin.right,
+radarheight = Math.min(radarwidth, window.innerHeight - radarmargin.top - radarmargin.bottom - 20);
 
-var margin = {top: 100, right: 100, bottom: 100, left: 100},
-width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
-height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+var colorRange = ['#94003a', '#ae3e52', '#c9676c', '#e28d87', '#fbb4a2'].reverse();
 
 var radarChartOptions = {
-  w: width,
-  h: height,
-  margin: margin,
+  w: radarwidth,
+  h: radarheight, 
+  margin: radarmargin,
   maxValue: 0.5,
   levels: 5,
   roundStrokes: true,
-  color: d3.scaleOrdinal().range(['#94003a', '#ae3e52', '#c9676c', '#e28d87', '#fbb4a2'].reverse()),
+  color: d3.scaleOrdinal().range(colorRange),
   opacityArea: 0,
   strokeWidth: 2,
   dotRadius: 4,
 };
+
+const email = 'User8@gmail.com'
+
+const scores = collection(db, 'mock');  // connect to specific game collection
+const qScores = query(scores, limit(5), orderBy('dia', 'desc'), where("usuario", "==", email))
 
 let radialGraph = onSnapshot(qScores, (snapshot) => {
   let userscores = []
@@ -279,3 +284,53 @@ let radialGraph = onSnapshot(qScores, (snapshot) => {
   
 });
 radialGraph;
+
+// Parallel coordinates
+
+const pQuery = query(scores, orderBy('dia', 'asc'))
+
+var parmargin = {top: 50, right: 50, bottom: 50, left: 100},
+parwidth = Math.min(1000, window.innerWidth - 10) - parmargin.left - parmargin.right,
+parheight = Math.min(300, window.innerHeight - parmargin.top - parmargin.bottom - 20);
+
+var parcoord = d3.select(".parcoords")
+.style("width",  parwidth + parmargin.left + parmargin.right + "px")
+.style("height", parheight + parmargin.top + parmargin.bottom + "px")
+
+let parallelGraph = onSnapshot(pQuery, (snapshot) => {
+  var object = {}
+  // for each user, get their most recent score
+  snapshot.docs.forEach((doc, i) => {
+    object[doc.data().usuario] = {"Score no jogo 1": Math.max(doc.data().jogo1*0.01, 0),
+    "Score no jogo 2": Math.max(doc.data().jogo2*0.01, 0),
+    "Score no jogo 3": Math.max(doc.data().jogo3*0.01, 0),
+    "Score no jogo 4": Math.max(doc.data().jogo4*0.01, 0),
+    "Score no jogo 5": Math.max(doc.data().jogo5*0.01, 0),
+    "key": doc.data().usuario}
+  })
+  // flatten object
+  var userscores = []
+  Object.values(object).forEach(doc => {
+    userscores.push({"Usuario": doc.key, 
+                     "Score no jogo 1": doc["Score no jogo 1"],
+                     "Score no jogo 2": doc["Score no jogo 2"],
+                     "Score no jogo 3": doc["Score no jogo 3"],
+                     "Score no jogo 4": doc["Score no jogo 4"],
+                     "Score no jogo 5": doc["Score no jogo 5"]})
+  })
+  console.log(userscores)
+  var pc2 = ParCoords()(".parcoords");
+  pc2
+    .data(userscores)
+    .color(function(d) {
+      if (d.Usuario.toLowerCase() === auth.currentUser.email)
+          return colorRange.slice(-1);
+      else
+          return "#000";
+  })
+    .alpha(0.6)
+    .margin(parmargin)
+    .render()
+    .reorderable()
+    .brushMode("1D-axes")  // enable brushing;
+})
