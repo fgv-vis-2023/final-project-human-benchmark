@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tailwind Starter Template - Minimal Admin Template: Tailwind Toolbox</title>
+    <meta name="description" content="description here">
+    <meta name="keywords" content="keywords,here">
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700,800" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+    <!--Replace with your tailwind.css once created-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+
+    <style>
+        .nunito {
+            font-family: 'nunito', font-sans;
+        }
+
+        .border-b-1 {
+            border-bottom-width: 1px;
+        }
+
+        .border-l-1 {
+            border-left-width: 1px;
+        }
+
+        hover\:border-none:hover {
+            border-style: none;
+        }
+
+        #sidebar {
+            transition: ease-in-out all .3s;
+            z-index: 9999;
+        }
+
+        #sidebar span {
+            opacity: 0;
+            position: absolute;
+            transition: ease-in-out all .1s;
+        }
+
+        #sidebar:hover {
+            width: 150px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            /*shadow-2xl*/
+        }
+
+        #sidebar:hover span {
+            opacity: 1;
+        }
+    </style>
+
+</head>
+
+<body class="flex h-screen bg-gray-100 font-sans">
+
+    
+
+<!-- Side bar-->
+<div id="sidebar" class="h-screen w-16 menu bg-white text-white px-4 flex items-center nunito static fixed shadow">
+    <ul class="list-reset">
+        <li class="my-2 md:my-0">
+            <a href="home.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
+                <i class="fas fa-home fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Home</span>
+            </a>
+        </li>
+        
+      <li class="my-2 md:my-0 ">
+        <a href="profile.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
+            <i class="fas fa-tasks fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Profile</span>
+        </a>
+    </li>
+    
+    <li class="my-2 md:my-0">
+            <a href="games.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
+                <i class="fa fa-envelope fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Games</span>
+            </a>
+        </li>
+        <li class="my-2 md:my-0">
+            <a href="index.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
+                <i class="fas fa-chart-area fa-fw mr-3 text-indigo-400"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Analytics</s*pan>
+            </a>
+        </li>
+    </ul>
+  </div>
+
+  <style>
+    .title-container {
+        display: flex;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+    }
+
+    .title {
+        font-size: 5rem;
+        margin-left: 475px;
+        animation: fade-in 3s ease-in;
+    }
+
+    .subtitle {
+        font-size: 1.7rem;
+        margin-top: 3rem;
+        margin-left: 475px;
+        opacity: 0;
+        animation: fade-in 3s;
+        animation-delay: 2s;
+        animation-fill-mode: forwards;
+    }
+    @keyframes fade-in {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .brain-image {
+            position: absolute;
+            bottom: 50px;
+            left: 430px;
+            width: 550px;        
+            height: auto;
+            opacity: 0.1;
+        }
+</style>
+
+</style>
+
+<!--Main Content-->
+<div class="title-container">
+    <div class="container mx-auto px-4">
+        <div class="mt-8">
+            <h1 class="title text-3xl font-bold">MindTrack</h1>
+            <h2 class="subtitle text-xl mt-2 text-gray-600">A journey to a sharper mind</h2>
+        </div>
+    </div>
+    <img src="brain.png" alt="Brain" class="brain-image">
+</div>
+
+
+
+</body>
+
+</html>
