@@ -1,5 +1,5 @@
 // run 'npm run build' to bundle this file
-import { sampleNormal, sampleScore } from './aux.js';
+import { sampleNormal, sampleScore } from './sampling.js';
 import { initializeApp } from "firebase/app";
 import {
   getFirestore, collection, getDocs, onSnapshot,
@@ -257,80 +257,101 @@ var radarChartOptions = {
   dotRadius: 4,
 };
 
-const email = 'User8@gmail.com'
-
-const scores = collection(db, 'mock');  // connect to specific game collection
-const qScores = query(scores, limit(5), orderBy('dia', 'desc'), where("usuario", "==", email))
-
-let radialGraph = onSnapshot(qScores, (snapshot) => {
-  let userscores = []
-  snapshot.docs.forEach((doc, i) => {
-    userscores.push({"key": "Dia "+(5-i).toString(), "values": [
-      {axis: "Score no jogo 1", value: Math.max(doc.data().jogo1*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i},
-      {axis: "Score no jogo 2", value: Math.max(doc.data().jogo2*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i},
-      {axis: "Score no jogo 3", value: Math.max(doc.data().jogo3*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i},
-      {axis: "Score no jogo 4", value: Math.max(doc.data().jogo4*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i},
-      {axis: "Score no jogo 5", value: Math.max(doc.data().jogo5*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i}
-    ]})
-})
-  let userscores_inv = userscores.reverse()
-  // userscores = userscores.map((doc) => doc.slice(1, 6))
-  const data = snapshot.docs.map((doc) => doc.data());
-  console.log(data)
-  console.log(userscores_inv)
-
-  //Call function to draw the Radar chart
-  RadarChart(".radarChart", userscores, radarChartOptions);
+var useremail = ""
+onAuthStateChanged(auth, (user) => {
+  if (user === null) {
+    useremail = "user8@gmail.com"  // default user
+  } else {
+    useremail = auth.currentUser.email
+  }
   
-});
-radialGraph;
+  const scores = collection(db, 'mock');  // connect to specific game collection
+  // const qScores = query(scores, limit(5), orderBy('dia', 'desc'), where("usuario", "==", useremail))
+  const qScores = query(scores, limit(5), orderBy('dia', 'desc'), where("usuario", "==", useremail.charAt(0).toUpperCase() + useremail.slice(1)))
+  console.log(useremail.charAt(0).toUpperCase() + useremail.slice(1))
+  
+  let radialGraph = onSnapshot(qScores, (snapshot) => {
+    let userscores = []
+    snapshot.docs.forEach((doc, i) => {
+      userscores.push({"key": "Dia "+(5-i).toString(), "values": [
+        {axis: "Score no jogo 1", value: Math.max(doc.data().jogo1*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i},
+        {axis: "Score no jogo 2", value: Math.max(doc.data().jogo2*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i},
+        {axis: "Score no jogo 3", value: Math.max(doc.data().jogo3*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i},
+        {axis: "Score no jogo 4", value: Math.max(doc.data().jogo4*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i},
+        {axis: "Score no jogo 5", value: Math.max(doc.data().jogo5*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i}
+      ]})
+  })
+    let userscores_inv = userscores.reverse()
+    // userscores = userscores.map((doc) => doc.slice(1, 6))
+    const data = snapshot.docs.map((doc) => doc.data());
+    console.log(data)
+    console.log(userscores_inv)
+  
+    //Call function to draw the Radar chart
+    RadarChart(".radarChart", userscores, radarChartOptions);
+    
+  });
+  radialGraph;
+
+  // Parallel coordinates graph
+  const pQuery = query(scores, orderBy('dia', 'asc'))
+  
+  var parmargin = {top: 50, right: 50, bottom: 50, left: 100},
+  parwidth = Math.min(1000, window.innerWidth - 10) - parmargin.left - parmargin.right,
+  parheight = Math.min(300, window.innerHeight - parmargin.top - parmargin.bottom - 20);
+  
+  var parcoord = d3.select(".parcoords")
+  .style("width",  parwidth + parmargin.left + parmargin.right + "px")
+  .style("height", parheight + parmargin.top + parmargin.bottom + "px")
+  
+  var dimensions = {
+    "Score no jogo 1": {type:"number"},
+    "Score no jogo 2": {type:"number"},
+    "Score no jogo 3": {type:"number"},
+    "Score no jogo 4": {type:"number"},
+    "Score no jogo 5": {type:"number"}};
+  
+  let parallelGraph = onSnapshot(pQuery, (snapshot) => {
+    var object = {}
+    // for each user, get their most recent score
+    snapshot.docs.forEach((doc, i) => {
+      object[doc.data().usuario] = {"Score no jogo 1": Math.max(doc.data().jogo1*0.01, 0),
+      "Score no jogo 2": Math.max(doc.data().jogo2*0.01, 0),
+      "Score no jogo 3": Math.max(doc.data().jogo3*0.01, 0),
+      "Score no jogo 4": Math.max(doc.data().jogo4*0.01, 0),
+      "Score no jogo 5": Math.max(doc.data().jogo5*0.01, 0),
+      "key": doc.data().usuario}
+    })
+    // flatten object
+    var userscores = []
+    Object.values(object).forEach(doc => {
+      userscores.push({"Usuario": doc.key, 
+                       "Score no jogo 1": doc["Score no jogo 1"],
+                       "Score no jogo 2": doc["Score no jogo 2"],
+                       "Score no jogo 3": doc["Score no jogo 3"],
+                       "Score no jogo 4": doc["Score no jogo 4"],
+                       "Score no jogo 5": doc["Score no jogo 5"]})
+    })
+    console.log(userscores)
+  
+    var pc2 = ParCoords()(".parcoords");
+    pc2
+      .data(userscores)
+      .dimensions(dimensions)
+      .color(function(d) {
+        if (d.Usuario.toLowerCase() === useremail)
+            return colorRange.slice(-1);
+        else
+            return "#000";
+    })
+      .alpha(0.6)
+      .margin(parmargin)
+      .render()
+      .reorderable()
+      .brushMode("1D-axes")  // enable brushing;
+      .mark(userscores.filter(d => d.Usuario.toLowerCase() === useremail))
+  })
+})
+
 
 // Parallel coordinates
-
-const pQuery = query(scores, orderBy('dia', 'asc'))
-
-var parmargin = {top: 50, right: 50, bottom: 50, left: 100},
-parwidth = Math.min(1000, window.innerWidth - 10) - parmargin.left - parmargin.right,
-parheight = Math.min(300, window.innerHeight - parmargin.top - parmargin.bottom - 20);
-
-var parcoord = d3.select(".parcoords")
-.style("width",  parwidth + parmargin.left + parmargin.right + "px")
-.style("height", parheight + parmargin.top + parmargin.bottom + "px")
-
-let parallelGraph = onSnapshot(pQuery, (snapshot) => {
-  var object = {}
-  // for each user, get their most recent score
-  snapshot.docs.forEach((doc, i) => {
-    object[doc.data().usuario] = {"Score no jogo 1": Math.max(doc.data().jogo1*0.01, 0),
-    "Score no jogo 2": Math.max(doc.data().jogo2*0.01, 0),
-    "Score no jogo 3": Math.max(doc.data().jogo3*0.01, 0),
-    "Score no jogo 4": Math.max(doc.data().jogo4*0.01, 0),
-    "Score no jogo 5": Math.max(doc.data().jogo5*0.01, 0),
-    "key": doc.data().usuario}
-  })
-  // flatten object
-  var userscores = []
-  Object.values(object).forEach(doc => {
-    userscores.push({"Usuario": doc.key, 
-                     "Score no jogo 1": doc["Score no jogo 1"],
-                     "Score no jogo 2": doc["Score no jogo 2"],
-                     "Score no jogo 3": doc["Score no jogo 3"],
-                     "Score no jogo 4": doc["Score no jogo 4"],
-                     "Score no jogo 5": doc["Score no jogo 5"]})
-  })
-  console.log(userscores)
-  var pc2 = ParCoords()(".parcoords");
-  pc2
-    .data(userscores)
-    .color(function(d) {
-      if (d.Usuario.toLowerCase() === auth.currentUser.email)
-          return colorRange.slice(-1);
-      else
-          return "#000";
-  })
-    .alpha(0.6)
-    .margin(parmargin)
-    .render()
-    .reorderable()
-    .brushMode("1D-axes")  // enable brushing;
-})
