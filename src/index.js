@@ -13,14 +13,15 @@ import * as d3 from 'd3';
 import { RadarChart } from './radarChart.js';
 import 'parcoord-es/dist/parcoords.css';
 import ParCoords from 'parcoord-es';
+import { PctBarChart } from './pctBarChart.js';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBJnXNrYtlXC-DybP5MAJZXuYKHqcczpoE",
-  authDomain: "mind-track-778eb.firebaseapp.com",
-  projectId: "mind-track-778eb",
-  storageBucket: "mind-track-778eb.appspot.com",
-  messagingSenderId: "960246747563",
-  appId: "1:960246747563:web:f659460f312b7fd89b42ee"
+  apiKey: "AIzaSyAc5E-QFXg4gyG6vYn40nmED2NzVArJ8tI",
+  authDomain: "mindtrack-42.firebaseapp.com",
+  projectId: "mindtrack-42",
+  storageBucket: "mindtrack-42.appspot.com",
+  messagingSenderId: "291274752534",
+  appId: "1:291274752534:web:b91f4b1d4a7b6097c3eb37",
 };
 
 
@@ -159,38 +160,19 @@ loginForm.addEventListener('submit', (e) => {
     })
 })
 
-// // function to generate score data for a specific game game
-// const generate = document.querySelector('.generate');
-// generate.addEventListener('click', () => {
-//   // function that generates 100 random usernames, with scores for each game
-//   const colRef = collection(db, 'testgame5');  // connect to collection 'users'
-//   for (let i = 0; i < 10; i++) {
-//     let score = sampleScore(40, 25)
-//     for (let j = 0; j < 50; j++) {
-//       addDoc(colRef, {
-//         Username: "User" + i + "@gmail.com",
-//         "Score": ~~score,
-//         createdAt: serverTimestamp(),
-//       })
-//       score = score + sampleNormal(3, 2)
-//       score = Math.min(score, 100)
-//     }
-//   }
-// })
-
 // const generate = document.querySelector('.generate');
 // generate.addEventListener('click', () => {
 //   // function that generates 100 random usernames, with scores for each game
 //   const colRef = collection(db, 'mock');  // connect to collection 'users'
-//   for (let i = 0; i < 20; i++) {
+//   for (let i = 0; i < 10; i++) {
 //     let score1 = sampleScore(60, 15)
 //     let score2 = sampleScore(50, 20)
 //     let score3 = sampleScore(55, 25)
 //     let score4 = sampleScore(75, 10)
 //     let score5 = sampleScore(80, 20)
-//     for (let j = 0; j < 50; j++) {
+//     for (let j = 0; j < 10; j++) {
 //       addDoc(colRef, {
-//         usuario: "User" + i + "@gmail.com",
+//         usuario: "user" + i + "@gmail.com",
 //         jogo1: Math.min(~~(score1 + j*sampleNormal(1, 0.7)), 100),
 //         jogo2: Math.min(~~(score2 + j*sampleNormal(1.5, 1)), 100),
 //         jogo3: Math.min(~~(score3 + j*sampleNormal(1.2, 0.7)), 100),
@@ -267,29 +249,34 @@ onAuthStateChanged(auth, (user) => {
   
   const scores = collection(db, 'mock');  // connect to specific game collection
   // const qScores = query(scores, limit(5), orderBy('dia', 'desc'), where("usuario", "==", useremail))
-  const qScores = query(scores, limit(5), orderBy('dia', 'desc'), where("usuario", "==", useremail.charAt(0).toUpperCase() + useremail.slice(1)))
-  console.log(useremail.charAt(0).toUpperCase() + useremail.slice(1))
+  const qScores = query(scores, limit(5), orderBy('dia', 'desc'), where("usuario", "==", useremail))
+  console.log(useremail)
   
   let radialGraph = onSnapshot(qScores, (snapshot) => {
     let userscores = []
     snapshot.docs.forEach((doc, i) => {
-      userscores.push({"key": "Dia "+(5-i).toString(), "values": [
-        {axis: "Score no jogo 1", value: Math.max(doc.data().jogo1*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i},
-        {axis: "Score no jogo 2", value: Math.max(doc.data().jogo2*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i},
-        {axis: "Score no jogo 3", value: Math.max(doc.data().jogo3*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i},
-        {axis: "Score no jogo 4", value: Math.max(doc.data().jogo4*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i},
-        {axis: "Score no jogo 5", value: Math.max(doc.data().jogo5*0.01, 0), areaName: "Dia "+(5-i).toString(), index: i}
+      userscores.push({"key": "Day "+(5-i).toString(), "values": [
+        {axis: "Test 1 Score", value: Math.max(doc.data().jogo1*0.01, 0), areaName: "Day "+(5-i).toString(), index: i},
+        {axis: "Test 2 Score", value: Math.max(doc.data().jogo2*0.01, 0), areaName: "Day "+(5-i).toString(), index: i},
+        {axis: "Test 3 Score", value: Math.max(doc.data().jogo3*0.01, 0), areaName: "Day "+(5-i).toString(), index: i},
+        {axis: "Test 4 Score", value: Math.max(doc.data().jogo4*0.01, 0), areaName: "Day "+(5-i).toString(), index: i},
+        {axis: "Test 5 Score", value: Math.max(doc.data().jogo5*0.01, 0), areaName: "Day "+(5-i).toString(), index: i}
       ]})
   })
     let userscores_inv = userscores.reverse()
     // userscores = userscores.map((doc) => doc.slice(1, 6))
     const data = snapshot.docs.map((doc) => doc.data());
-    console.log(data)
-    console.log(userscores_inv)
   
     //Call function to draw the Radar chart
     RadarChart(".radarChart", userscores, radarChartOptions);
-    
+
+    var mostRecent = []
+
+    userscores[0].values.forEach((d, i) => {
+      mostRecent.push({Game: d.axis, Score: d.value*100})
+    })
+
+    PctBarChart(".pctBarChart", mostRecent);
   });
   radialGraph;
 
@@ -305,32 +292,33 @@ onAuthStateChanged(auth, (user) => {
   .style("height", parheight + parmargin.top + parmargin.bottom + "px")
   
   var dimensions = {
-    "Score no jogo 1": {type:"number"},
-    "Score no jogo 2": {type:"number"},
-    "Score no jogo 3": {type:"number"},
-    "Score no jogo 4": {type:"number"},
-    "Score no jogo 5": {type:"number"}};
+    "Test 1 Score": {type:"number"},
+    "Test 2 Score": {type:"number"},
+    "Test 3 Score": {type:"number"},
+    "Test 4 Score": {type:"number"},
+    "Test 5 Score": {type:"number"}};
   
   let parallelGraph = onSnapshot(pQuery, (snapshot) => {
     var object = {}
     // for each user, get their most recent score
     snapshot.docs.forEach((doc, i) => {
-      object[doc.data().usuario] = {"Score no jogo 1": Math.max(doc.data().jogo1*0.01, 0),
-      "Score no jogo 2": Math.max(doc.data().jogo2*0.01, 0),
-      "Score no jogo 3": Math.max(doc.data().jogo3*0.01, 0),
-      "Score no jogo 4": Math.max(doc.data().jogo4*0.01, 0),
-      "Score no jogo 5": Math.max(doc.data().jogo5*0.01, 0),
+      object[doc.data().usuario] = {
+      "Test 1 Score": Math.max(doc.data().jogo1*0.01, 0),
+      "Test 2 Score": Math.max(doc.data().jogo2*0.01, 0),
+      "Test 3 Score": Math.max(doc.data().jogo3*0.01, 0),
+      "Test 4 Score": Math.max(doc.data().jogo4*0.01, 0),
+      "Test 5 Score": Math.max(doc.data().jogo5*0.01, 0),
       "key": doc.data().usuario}
     })
     // flatten object
     var userscores = []
     Object.values(object).forEach(doc => {
       userscores.push({"Usuario": doc.key, 
-                       "Score no jogo 1": doc["Score no jogo 1"],
-                       "Score no jogo 2": doc["Score no jogo 2"],
-                       "Score no jogo 3": doc["Score no jogo 3"],
-                       "Score no jogo 4": doc["Score no jogo 4"],
-                       "Score no jogo 5": doc["Score no jogo 5"]})
+                       "Test 1 Score": doc["Test 1 Score"],
+                       "Test 2 Score": doc["Test 2 Score"],
+                       "Test 3 Score": doc["Test 3 Score"],
+                       "Test 4 Score": doc["Test 4 Score"],
+                       "Test 5 Score": doc["Test 5 Score"]})
     })
     console.log(userscores)
   
