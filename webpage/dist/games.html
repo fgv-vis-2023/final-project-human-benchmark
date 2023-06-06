@@ -103,70 +103,27 @@
 
             <li class="my-2 md:my-0 ">
                 <a href="profile.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
-                    <i class="fas fa-user-circle fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Profile</span>
+                    <i class="fas fa-tasks fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Profile</span>
                 </a>
             </li>
 
-            
-        <li class="my-2 md:my-0">
-            <a href="games.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
-                <i class="fa fa-brain fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Tests</span>
-         </a>
-         </li>
+            <li class="my-2 md:my-0">
+                <a href="games.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
+                    <i class="fa fa-brain fa-fw mr-3 text-indigo-400"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Tests</span>
+                </a>
+            </li>
             <li class="my-2 md:my-0">
                 <a href="index.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
-                    <i class="fas fa-chart-area fa-fw mr-3 text-indigo-400"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Analytics</span>
+                    <i class="fas fa-chart-area fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Analytics</span>
                 </a>
             </li>
         </ul>
     </div>
 
-    <div class="absolute top-0 left-20 p-4 text-gray-600 font-bold text-2xl">Pick a game and enjoy!</div>
-
     <div class="absolute inset-0 flex justify-center items-center">
-        <div class="text-gray-600 font-bold text-4xl opacity-30">*there will be games here*</div>
+        <iframe frameborder="0" src="https://itch.io/embed-upload/8047777?color=bbdefb" allowfullscreen="" width="1024" height="620"><a href="https://lfzinho.itch.io/mindtrack">Play MindTrack on itch.io</a></iframe>
     </div>
 
-
-    <div class="container">
-        <h2>This is your info:</h2>
-        <table class="info-table">
-            <tbody id="data-body">
-                <!-- Table body content will be added dynamically -->
-            </tbody>
-        </table>
-    </div>
-    
-    <script>
-        // Retrieve form data from local storage
-        const name = localStorage.getItem('name');
-        const gender = localStorage.getItem('gender');
-        const age = localStorage.getItem('age');
-        const sleep = localStorage.getItem('sleep');
-        const daytime = localStorage.getItem('daytime');
-        const emotion = localStorage.getItem('emotion');
-        
-        // Create table rows with the retrieved data
-        const rows = [
-            { label: 'Name', value: name },
-            { label: 'Gender', value: gender },
-            { label: 'Age', value: age },
-            { label: 'Sleep', value: sleep },
-            { label: 'Daytime', value: daytime },
-            { label: 'Emotion', value: emotion }
-        ];
-        
-        // Append the rows to the table body
-        const tableBody = document.getElementById('data-body');
-        rows.forEach(row => {
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td>${row.label}:</td>
-                <td>${row.value}</td>
-            `;
-            tableBody.appendChild(newRow);
-        });
-    </script>
 </body>
 
 
