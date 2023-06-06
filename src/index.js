@@ -15,17 +15,12 @@ import 'parcoord-es/dist/parcoords.css';
 import ParCoords from 'parcoord-es';
 import { PctBarChart } from './pctBarChart.js';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAc5E-QFXg4gyG6vYn40nmED2NzVArJ8tI",
-  authDomain: "mindtrack-42.firebaseapp.com",
-  projectId: "mindtrack-42",
-  storageBucket: "mindtrack-42.appspot.com",
-  messagingSenderId: "291274752534",
-  appId: "1:291274752534:web:b91f4b1d4a7b6097c3eb37",
-};
+fetch("firebaseConfig.json")
+  .then(response => response.json())
+  .then(config => {
+    initializeApp(config);
+  })
 
-
-initializeApp(firebaseConfig);
 
 const db = getFirestore();  // connect to firestore
 const auth = getAuth();  // connect to auth
@@ -198,8 +193,8 @@ onAuthStateChanged(auth, (user) => {
                        "Test 4 Score": doc["Test 4 Score"],
                        "Test 5 Score": doc["Test 5 Score"]})
     })
-    console.log(userscores)
-  
+    
+    d3.select(".parcoords").select("svg").remove();
     var pc2 = ParCoords()(".parcoords");
     pc2
       .data(userscores)
