@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mind Track</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+        <script src = "https://d3js.org/d3.v4.min.js"></script>
+    </head>
+<body>
+    <h2>Firebase Auth:</h2>
+    <!-- <button class="generate">Generate 100 random users with scores</button> -->
+    
+    <form class="signup">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+    
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+    
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <form class="login">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+    
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+    
+        <button>Login</button>
+    </form>
+
+    <button class="logout">Logout</button>
+
+    <!-- Gráficos -->
+    <div class="container" id="mainView">
+        <!-- <svg viewBox="0 0 376 508">
+            <rect x="0" y="0" width="200" height="100" rx="10" fill="Lavender" />
+            <text x="8" y="8" font-size="5" font-family="Open Sans, Helvetica" fill="Gray" id="radialTitle">Radial Plot</text>
+            <clipPath id="radialPlotClip">
+                <rect x="0" y="0" width="376" height="508" rx="15" fill="Lavender" />
+            </clipPath>
+            <g clip-path="url(#radialPlotClip)">
+                <g transform="translate(10, 10)" id="radialPlotGroup" ></g>
+            </g>
+            <div class="tooltip" id="radialTooltip">
+            </div>
+        </svg> -->
+        <div class="radial" id="radial"></div>
+        <div class="radarChart"></div>
+        <div class="parcoords"></div>
+        <div class="pctBarChart" id="pctBarChart"></div>
+    </div>
+
+
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.13.0/d3-legend.js"></script>
+<script src="bundle.js"></script>
+</html>

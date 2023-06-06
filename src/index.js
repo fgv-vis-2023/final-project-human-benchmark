@@ -15,31 +15,17 @@ import 'parcoord-es/dist/parcoords.css';
 import ParCoords from 'parcoord-es';
 import { PctBarChart } from './pctBarChart.js';
 
-fetch("firebaseConfig.json")
+fetch("./firebaseConfig.json")
   .then(response => response.json())
   .then(config => {
+    console.log(config);
     initializeApp(config);
-  })
 
 
 const db = getFirestore();  // connect to firestore
 const auth = getAuth();  // connect to auth
 
-const signupForm = document.querySelector('.signup');
-signupForm.addEventListener('submit', (e) => {
-  e.preventDefault()
-
-  createUserWithEmailAndPassword(auth, signupForm.email.value, signupForm.password.value)
-    .then((userCredential) => {
-      console.log('User created, welcome', userCredential.user)
-      signupForm.reset()
-    })
-    .catch((error) => {
-      alert(error.message)
-    })
-})
-
-const logoutButton = document.querySelector('.logout');
+const logoutButton = document.querySelector('#logout');
 logoutButton.addEventListener('click', () => {
   signOut(auth)
     .then(() => {
@@ -50,19 +36,6 @@ logoutButton.addEventListener('click', () => {
     })
 })
 
-const loginForm = document.querySelector('.login');
-loginForm.addEventListener('submit', (e) => {
-  e.preventDefault()
-
-  signInWithEmailAndPassword(auth, loginForm.email.value, loginForm.password.value)
-    .then((userCredential) => { 
-      console.log('User signed in', userCredential.user)
-      loginForm.reset()
-    })
-    .catch((error) => {
-      alert(error.message)
-    })
-})
 
 // const generate = document.querySelector('.generate');
 // generate.addEventListener('click', () => {
@@ -212,6 +185,7 @@ onAuthStateChanged(auth, (user) => {
       .brushMode("1D-axes")  // enable brushing;
       .mark(userscores.filter(d => d.Usuario.toLowerCase() === useremail))
   })
+})
 })
 
 
