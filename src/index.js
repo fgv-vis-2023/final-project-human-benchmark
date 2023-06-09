@@ -71,7 +71,8 @@ onAuthStateChanged(auth, (user) => {
   if (user === null) {
     useremail = "laguardia42@maildrop.cc"  // default user
   } else {
-    useremail = auth.currentUser.email
+    // useremail = auth.currentUser.email
+    useremail = "laguardia42@maildrop.cc"  // default user
   }
   
   const scores = collection(db, 'jogos');  // connect to specific game collection
@@ -81,9 +82,9 @@ onAuthStateChanged(auth, (user) => {
   
   let radialGraph = onSnapshot(qScores, (snapshot) => {
     let userscores = []
-    console.log(snapshot.docs)
     snapshot.docs.forEach((doc, i) => {
       var day = doc.data().dia.toDate().toLocaleDateString()
+      console.log(doc.data(), day)
       userscores.push({"key": day, "values": [
         {axis: "Attention", value: getPercentage(doc.data().atencao, pctScores["atencao"]), areaName: day, index: i},
         {axis: "Coordination", value: getPercentage(doc.data().coordenacao, pctScores["coordenacao"]) , areaName: day, index: i},
@@ -92,7 +93,7 @@ onAuthStateChanged(auth, (user) => {
         {axis: "Memory", value: getPercentage(doc.data().memoria, pctScores["memoria"]), areaName: day, index: i}
       ]})
   })
-    let userscores_inv = userscores.reverse()
+    userscores.reverse()
     // userscores = userscores.map((doc) => doc.slice(1, 6))
     const data = snapshot.docs.map((doc) => doc.data());
     radarChartOptions.color = d3.scaleOrdinal().range(colorRange.slice(-data.length))
@@ -102,8 +103,10 @@ onAuthStateChanged(auth, (user) => {
     var mostRecent = []
 
     userscores[0].values.forEach((d, i) => {
-      mostRecent.push({Game: d.axis, Score: d.value*100})
+      mostRecent.push({Game: d.axis, Score: ~~(d.value*100)})
     })
+
+    console.log(mostRecent)
 
     PctBarChart(".pctBarChart", mostRecent);
   });

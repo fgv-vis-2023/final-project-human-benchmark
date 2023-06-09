@@ -89,7 +89,7 @@ export function PctBarChart(id, data, options) {
 		.append('text')
 		  .attr('x', d => {
 			if (x(d.Score) < 90) {
-				return x(d.Score) + 85
+				return x(d.Score) + 65
 			} return x(d.Score) - 5})
 		  .attr('y', (d, i) => y(d.Game)+y.bandwidth()/2+14)
 		  .text(d => d.Score + '%')
