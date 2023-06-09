@@ -88,13 +88,14 @@ export function PctBarChart(id, data, options) {
 		.enter()
 		.append('text')
 		  .attr('x', d => {
-			if (x(d.Score) < 100) {
-				return x(d.Score) + 5
-			} return x(d.Score) - 90})
+			if (x(d.Score) < 90) {
+				return x(d.Score) + 85
+			} return x(d.Score) - 5})
 		  .attr('y', (d, i) => y(d.Game)+y.bandwidth()/2+14)
 		  .text(d => d.Score + '%')
 		  .attr('fill', 'white')
 		  .attr('font-size', '42px')
 		  .attr('font-weight', 'bold')
 		  .attr('font-family', 'sans-serif')
+		  .attr('text-anchor', 'end')
 }//RadarChart

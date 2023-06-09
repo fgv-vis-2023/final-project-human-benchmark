@@ -192,10 +192,12 @@ export function RadarChart(id, data, options) {
 	blobWrapper
 		.append("path")
 		.attr("class", function(d) {
-			return "radarArea" + " " + d[0][areaName].replace(/\s+/g, '') //Remove spaces from the areaName string to make one valid class name
+			return "radarArea" + " " + "d"+d[0][areaName].replace(/\s+/g, '').replace(RegExp('/', "g"), '-') //Remove spaces from the areaName string to make one valid class name
 		})
 		.attr("d", function(d,i) { return radarLine(d); })
-		.style("fill", function(d,i) { return cfg.color(i); })
+		.style("fill", function(d,i) { 
+			return cfg.color(d[0].areaName); 
+		})
 		.style("fill-opacity", cfg.opacityArea)
 		.on('mouseover', function (d,i){
 			// console.log("d", d);
@@ -224,7 +226,7 @@ export function RadarChart(id, data, options) {
         // add if statement for stroke=0
         .style("stroke", function(d, i) {
             if (cfg.strokeWidth === 0) {return;}
-            else {return cfg.color(i);}
+            else {return cfg.color(d[0].areaName);}
         })
         .style("fill", "none")
         .style("filter" , "url(#glow)");		
@@ -237,7 +239,9 @@ export function RadarChart(id, data, options) {
         .attr("r", function(d){return d.index===0&cfg.highlight_recent ? cfg.dotRadius + 2 : cfg.dotRadius;})
 		.attr("cx", function(d,i){ return rScale(d[value]) * Math.cos(angleSlice*i - Math.PI/2); })
 		.attr("cy", function(d,i){ return rScale(d[value]) * Math.sin(angleSlice*i - Math.PI/2); })
-		.style("fill", function(d,i,j) { return cfg.color(-(d.index-4)); })
+		.style("fill", function(d,i) {
+			 return cfg.color(d.areaName); 
+			})
 		.style("fill-opacity", 0.8);
 
 	/////////////////////////////////////////////////////////
@@ -317,12 +321,11 @@ export function RadarChart(id, data, options) {
 	// on mouseover for the legend symbol
 	function cellover(d) {
 			//Dim all blobs´
-            // console.log(data[d])
 			d3.selectAll(".radarArea")
 				.transition().duration(200)
 				.style("fill-opacity", cfg.opacityArea===0 ? 0 : 0.1); 
 			//Bring back the hovered over blob
-			d3.select("." + data[d][0][areaName].replace(/\s+/g, ''))
+			d3.select("." + "d"+d.replace(/\s+/g, '').replace(RegExp('/', "g"), '-'))
 				.transition().duration(200)
 				.style("fill-opacity", 0.7);	
 	}
@@ -350,9 +353,8 @@ export function RadarChart(id, data, options) {
   	.shape("path", d3.symbol().type(d3.symbolTriangle).size(150)())
   	.shapePadding(10)
   	.scale(cfg.color)
-  	.labels(cfg.color.domain().slice(0, 5).map(function(d){
-        // console.log(cfg.color)
-  		return data[d][0][areaName];
+  	.labels(cfg.color.domain().slice(0, data.length).map(function(d){
+  		return d;
   	}))
   	.on("cellover", function(d){ cellover(d); })
   	.on("cellout", function(d) { cellout(); });

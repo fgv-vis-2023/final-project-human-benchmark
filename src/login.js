@@ -1,5 +1,5 @@
 // run 'npm run build' to bundle this file
-import { sampleNormal, sampleScore } from './sampling.js';
+import { sampleNormal, sampleScore } from './utilities.js';
 import { initializeApp } from "firebase/app";
 import {
   getFirestore, collection, getDocs, onSnapshot,

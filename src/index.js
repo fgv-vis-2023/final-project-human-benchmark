@@ -1,5 +1,5 @@
 // run 'npm run build' to bundle this file
-import { sampleNormal, sampleScore } from './sampling.js';
+import { sampleNormal, sampleScore, getPercentage } from './utilities.js';
 import { initializeApp } from "firebase/app";
 import {
   getFirestore, collection, getDocs, onSnapshot,
@@ -18,7 +18,7 @@ import { PctBarChart } from './pctBarChart.js';
 fetch("./firebaseConfig.json")
   .then(response => response.json())
   .then(config => {
-    console.log(config);
+    // console.log(config);
     initializeApp(config);
 
 
@@ -36,33 +36,14 @@ logoutButton.addEventListener('click', () => {
     })
 })
 
+const percentis = collection(db, 'percentis')
+const pctScores = {}
+getDocs(percentis).then((snapshot) => {
+  snapshot.docs.forEach((doc) => {
+    pctScores[doc.id] = doc.data()
+  })
+})
 
-// const generate = document.querySelector('.generate');
-// generate.addEventListener('click', () => {
-//   // function that generates 100 random usernames, with scores for each game
-//   const colRef = collection(db, 'mock');  // connect to collection 'users'
-//   for (let i = 0; i < 10; i++) {
-//     let score1 = sampleScore(60, 15)
-//     let score2 = sampleScore(50, 20)
-//     let score3 = sampleScore(55, 25)
-//     let score4 = sampleScore(75, 10)
-//     let score5 = sampleScore(80, 20)
-//     for (let j = 0; j < 10; j++) {
-//       addDoc(colRef, {
-//         usuario: "user" + i + "@gmail.com",
-//         jogo1: Math.min(~~(score1 + j*sampleNormal(1, 0.7)), 100),
-//         jogo2: Math.min(~~(score2 + j*sampleNormal(1.5, 1)), 100),
-//         jogo3: Math.min(~~(score3 + j*sampleNormal(1.2, 0.7)), 100),
-//         jogo4: Math.min(~~(score4 + j*sampleNormal(0.5, 0.5)), 100),
-//         jogo5: Math.min(~~(score5 + j*sampleNormal(0.5, 0.5)), 100),
-//         dia: serverTimestamp(),
-//         sono: ~~sampleScore(7, 1.5),
-//         exercicio: ~~sampleScore(1, 2),
-//         emocao: ~~sampleScore(3, 2)
-//       })
-//     }
-//   }
-// })
 
                   
 // Radial graph
@@ -79,40 +60,42 @@ var radarChartOptions = {
   maxValue: 0.5,
   levels: 5,
   roundStrokes: true,
-  color: d3.scaleOrdinal().range(colorRange),
   opacityArea: 0,
   strokeWidth: 2,
   dotRadius: 4,
+  maxValue: 1
 };
 
 var useremail = ""
 onAuthStateChanged(auth, (user) => {
   if (user === null) {
-    useremail = "user8@gmail.com"  // default user
+    useremail = "laguardia42@maildrop.cc"  // default user
   } else {
     useremail = auth.currentUser.email
   }
   
-  const scores = collection(db, 'mock');  // connect to specific game collection
-  // const qScores = query(scores, limit(5), orderBy('dia', 'desc'), where("usuario", "==", useremail))
-  const qScores = query(scores, limit(5), orderBy('dia', 'desc'), where("usuario", "==", useremail))
+  const scores = collection(db, 'jogos');  // connect to specific game collection
+  // const qScores = query(scores, limit(5), orderBy('dia', 'desc'), where("email", "==", useremail))
+  const qScores = query(scores, limit(5), orderBy('dia', 'desc'), where("email", "==", useremail))
   console.log(useremail)
   
   let radialGraph = onSnapshot(qScores, (snapshot) => {
     let userscores = []
+    console.log(snapshot.docs)
     snapshot.docs.forEach((doc, i) => {
-      userscores.push({"key": "Day "+(5-i).toString(), "values": [
-        {axis: "Test 1 Score", value: Math.max(doc.data().jogo1*0.01, 0), areaName: "Day "+(5-i).toString(), index: i},
-        {axis: "Test 2 Score", value: Math.max(doc.data().jogo2*0.01, 0), areaName: "Day "+(5-i).toString(), index: i},
-        {axis: "Test 3 Score", value: Math.max(doc.data().jogo3*0.01, 0), areaName: "Day "+(5-i).toString(), index: i},
-        {axis: "Test 4 Score", value: Math.max(doc.data().jogo4*0.01, 0), areaName: "Day "+(5-i).toString(), index: i},
-        {axis: "Test 5 Score", value: Math.max(doc.data().jogo5*0.01, 0), areaName: "Day "+(5-i).toString(), index: i}
+      var day = doc.data().dia.toDate().toLocaleDateString()
+      userscores.push({"key": day, "values": [
+        {axis: "Attention", value: getPercentage(doc.data().atencao, pctScores["atencao"]), areaName: day, index: i},
+        {axis: "Coordination", value: getPercentage(doc.data().coordenacao, pctScores["coordenacao"]) , areaName: day, index: i},
+        {axis: "Perception", value: getPercentage(doc.data().percepcao, pctScores["percepcao"]), areaName: day, index: i},
+        {axis: "Reasoning", value: getPercentage(doc.data().raciocinio, pctScores["raciocinio"]), areaName: day, index: i},
+        {axis: "Memory", value: getPercentage(doc.data().memoria, pctScores["memoria"]), areaName: day, index: i}
       ]})
   })
     let userscores_inv = userscores.reverse()
     // userscores = userscores.map((doc) => doc.slice(1, 6))
     const data = snapshot.docs.map((doc) => doc.data());
-  
+    radarChartOptions.color = d3.scaleOrdinal().range(colorRange.slice(-data.length))
     //Call function to draw the Radar chart
     RadarChart(".radarChart", userscores, radarChartOptions);
 
@@ -138,33 +121,33 @@ onAuthStateChanged(auth, (user) => {
   .style("height", parheight + parmargin.top + parmargin.bottom + "px")
   
   var dimensions = {
-    "Test 1 Score": {type:"number"},
-    "Test 2 Score": {type:"number"},
-    "Test 3 Score": {type:"number"},
-    "Test 4 Score": {type:"number"},
-    "Test 5 Score": {type:"number"}};
+    "Attention Score": {type:"number"},
+    "Coordination Score": {type:"number"},
+    "Perception Score": {type:"number"},
+    "Reasoning Score": {type:"number"},
+    "Memory Score": {type:"number"}};
   
   let parallelGraph = onSnapshot(pQuery, (snapshot) => {
     var object = {}
     // for each user, get their most recent score
     snapshot.docs.forEach((doc, i) => {
-      object[doc.data().usuario] = {
-      "Test 1 Score": Math.max(doc.data().jogo1*0.01, 0),
-      "Test 2 Score": Math.max(doc.data().jogo2*0.01, 0),
-      "Test 3 Score": Math.max(doc.data().jogo3*0.01, 0),
-      "Test 4 Score": Math.max(doc.data().jogo4*0.01, 0),
-      "Test 5 Score": Math.max(doc.data().jogo5*0.01, 0),
-      "key": doc.data().usuario}
+      object[doc.data().email] = {
+      "Attention Score": Math.max(doc.data().atencao, 0),
+      "Coordination Score": Math.max(doc.data().coordenacao, 0),
+      "Perception Score": Math.max(doc.data().percepcao, 0),
+      "Reasoning Score": Math.max(doc.data().raciocinio, 0),
+      "Memory Score": Math.max(doc.data().memoria, 0),
+      "key": doc.data().email}
     })
     // flatten object
     var userscores = []
     Object.values(object).forEach(doc => {
-      userscores.push({"Usuario": doc.key, 
-                       "Test 1 Score": doc["Test 1 Score"],
-                       "Test 2 Score": doc["Test 2 Score"],
-                       "Test 3 Score": doc["Test 3 Score"],
-                       "Test 4 Score": doc["Test 4 Score"],
-                       "Test 5 Score": doc["Test 5 Score"]})
+      userscores.push({"email": doc.key, 
+                       "Attention Score": doc["Attention Score"],
+                       "Coordination Score": doc["Coordination Score"],
+                       "Perception Score": doc["Perception Score"],
+                       "Reasoning Score": doc["Reasoning Score"],
+                       "Memory Score": doc["Memory Score"]})
     })
     
     d3.select(".parcoords").select("svg").remove();
@@ -173,7 +156,7 @@ onAuthStateChanged(auth, (user) => {
       .data(userscores)
       .dimensions(dimensions)
       .color(function(d) {
-        if (d.Usuario.toLowerCase() === useremail)
+        if (d.email.toLowerCase() === useremail)
             return colorRange.slice(-1);
         else
             return "#000";
@@ -183,7 +166,7 @@ onAuthStateChanged(auth, (user) => {
       .render()
       .reorderable()
       .brushMode("1D-axes")  // enable brushing;
-      .mark(userscores.filter(d => d.Usuario.toLowerCase() === useremail))
+      .mark(userscores.filter(d => d.email.toLowerCase() === useremail))
   })
 })
 })
