@@ -71,8 +71,7 @@ onAuthStateChanged(auth, (user) => {
   if (user === null) {
     useremail = "laguardia42@maildrop.cc"  // default user
   } else {
-    // useremail = auth.currentUser.email
-    useremail = "laguardia42@maildrop.cc"  // default user
+    useremail = auth.currentUser.email
   }
   
   const scores = collection(db, 'jogos');  // connect to specific game collection
