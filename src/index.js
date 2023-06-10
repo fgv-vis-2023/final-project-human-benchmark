@@ -101,6 +101,7 @@ onAuthStateChanged(auth, (user) => {
 
     var mostRecent = []
 
+    userscores.reverse()
     userscores[0].values.forEach((d, i) => {
       mostRecent.push({Game: d.axis, Score: ~~(d.value*100)})
     })
