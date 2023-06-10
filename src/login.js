@@ -27,7 +27,7 @@ const auth = getAuth();  // connect to auth
 const signupForm = document.querySelector('#signup');
 signupForm.addEventListener('submit', (e) => {
   e.preventDefault()
-  createUserWithEmailAndPassword(auth, signupForm.email.value, signupForm.password.value)
+  createUserWithEmailAndPassword(auth, signupForm.username.value, signupForm.password.value)
     .then((userCredential) => {
       console.log('User created, welcome', userCredential.user)
       signupForm.reset()
@@ -52,7 +52,7 @@ const loginForm = document.querySelector('#login');
 loginForm.addEventListener('submit', (e) => {
   e.preventDefault()
 
-  signInWithEmailAndPassword(auth, loginForm.email.value, loginForm.password.value)
+  signInWithEmailAndPassword(auth, loginForm.username.value, loginForm.password.value)
     .then((userCredential) => { 
       console.log('User signed in', userCredential.user)
       loginForm.reset()
