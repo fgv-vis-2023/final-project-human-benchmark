@@ -1,5 +1,4 @@
 // run 'npm run build' to bundle this file
-import { sampleNormal, sampleScore, getPercentage } from './utilities.js';
 import { initializeApp } from "firebase/app";
 import {
   getFirestore, collection, getDocs, onSnapshot,
@@ -10,10 +9,7 @@ import {
   getAuth, createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, onAuthStateChanged
 } from "firebase/auth";
 import * as d3 from 'd3';
-import { RadarChart } from './radarChart.js';
 import 'parcoord-es/dist/parcoords.css';
-import ParCoords from 'parcoord-es';
-import { PctBarChart } from './pctBarChart.js';
 import { histogramChart } from './histogramChart.js';
 
 fetch("./firebaseConfig.json")
@@ -45,47 +41,58 @@ logoutButton.addEventListener('click', () => {
 //   })
 // })
 
-var game = "atencao"
+var pageLogic = function (game) {
+  var useremail = ""
+  onAuthStateChanged(auth, (user) => {
+    if (user === null) {
+      useremail = "laguardia42@maildrop.cc"  // default user
+    } else {
+      useremail = auth.currentUser.email
+    }
+    
+    const scores = collection(db, 'jogos');  // connect to specific game collection
+    // const qScores = query(scores, limit(5), orderBy('dia', 'desc'), where("email", "==", useremail))
+    console.log(useremail)
 
-var useremail = ""
-onAuthStateChanged(auth, (user) => {
-  if (user === null) {
-    useremail = "laguardia42@maildrop.cc"  // default user
-  } else {
-    useremail = auth.currentUser.email
-  }
-  
-  const scores = collection(db, 'jogos');  // connect to specific game collection
-  // const qScores = query(scores, limit(5), orderBy('dia', 'desc'), where("email", "==", useremail))
-  console.log(useremail)
+    onSnapshot(scores, (snapshot) => {
+      let userscores = []
+      let best_score = 0
+      let avg_score = 0
+      let recent_score = 0
+      let recent_date = 0
+      let count = 0
+      let test = []
 
-  onSnapshot(scores, (snapshot) => {
-    let userscores = []
-    let best_score = 0
-    let avg_score = 0
-    let recent_score = 0
-    let recent_date = 0
-    let count = 0
-    let test = []
-
-    snapshot.docs.forEach((doc) => {
-      const docdata = doc.data()
-      userscores.push(docdata)
-      if (docdata["email"] === useremail) {
-        test.push(docdata)
-        if (docdata[game] > best_score) {
-          best_score = docdata[game]
+      snapshot.docs.forEach((doc) => {
+        const docdata = doc.data()
+        userscores.push(docdata)
+        if (docdata["email"] === useremail) {
+          test.push(docdata)
+          if (docdata[game] > best_score) {
+            best_score = docdata[game]
+          }
+          avg_score += docdata[game]
+          count += 1
+          if (docdata["dia"] > recent_date) {
+            recent_date = docdata["dia"]
+            recent_score = docdata[game]
+          }
         }
-        avg_score += docdata[game]
-        count += 1
-        if (docdata["dia"] > recent_date) {
-          recent_date = docdata["dia"]
-          recent_score = docdata[game]
-        }
-      }
-    })
-    avg_score = avg_score / count
-    histogramChart(".histogram",userscores, best_score)
-  });
+      })
+      avg_score = avg_score / count
+      d3.select(".histogram").select("svg").remove();
+      histogramChart(".histogram", userscores, {"best": best_score, "avg": avg_score, "recent": recent_score}, {"game": game})
+    });
+  })
+}
+
+pageLogic("atencao")
+
+var select = document.getElementById('test-select');
+var game = select.options[select.selectedIndex].value;
+select.addEventListener('change', function(event) {
+  game = event.target.value;
+  console.log(game)
+  pageLogic(game)
 })
 })
