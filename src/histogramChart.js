@@ -45,7 +45,9 @@ export function histogramChart(id, data, threshold, options) {
 
 	var yAxis = svg.append("g")
 
-
+	
+	
+	// var threshold_group = svg.append("g")
 	function update(nBin, threshold_type) {
 		var histogram = d3.histogram()
 			.value(function(d) { return d[cfg.game]; })   // I need to give the vector of value
@@ -77,7 +79,7 @@ export function histogramChart(id, data, threshold, options) {
 				.attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
 				.attr("height", function(d) { return graphH - y(d.length); })
 				.style("fill", function(d){ if(d.x0<threshold[threshold_type]){return cfg.color.slice(-2)[0]} else {return cfg.color[1]}})
-
+	
 		svg.append("line").attr("id", "threshold-line")
 		svg.append("text").attr("id", "threshold-text")
 
@@ -95,8 +97,7 @@ export function histogramChart(id, data, threshold, options) {
 				.attr("y2", y(d3.max(bins, function(d) { return d.length; })))
 				.attr("stroke", "black")
 				.attr("stroke-dasharray", "4")
-
-		// var text = svg.select(".threshold-text")
+				.attr("class", "threshold-line-old")
 
 		text
 			.enter()
@@ -110,6 +111,7 @@ export function histogramChart(id, data, threshold, options) {
 				.style("fill", "black")
 				.style("font-weight", "bold")
 				.attr("text-anchor", "end")
+				.attr("class", "threshold-text-old")
 
 		// If less bar in the new histogram, I delete the ones not in use anymore
 		u.exit().remove()
@@ -119,13 +121,14 @@ export function histogramChart(id, data, threshold, options) {
 
 	let default_nBin = 10
 	let default_threshold = document.getElementById('score-select').value
-	console.log(default_threshold)
 	update(default_nBin, default_threshold)
 
 	// Listen to the button -> update if user change it
 	d3.select("#nBin").on("input", function() {
+		svg.selectAll("#threshold-text").remove()
+		svg.selectAll("#threshold-line").remove()
 		default_nBin = +this.value
-		update(default_nBin, "best");
+		update(default_nBin, default_threshold);
 	  });
 	d3.select("#score-select").on("change", function() {
 		default_threshold = this.value
