@@ -79,16 +79,16 @@ var pageLogic = function (game) {
           }
         }
       })
-      avg_score = avg_score / count
+      avg_score = Math.round(avg_score*100 / count)/100
       d3.select(".histogram").select("svg").remove();
       histogramChart(".histogram", userscores, {"best": best_score, "avg": avg_score, "recent": recent_score}, {"game": game})
     });
   })
 }
 
-pageLogic("atencao")
 
 var select = document.getElementById('test-select');
+pageLogic(select.value)
 var game = select.options[select.selectedIndex].value;
 select.addEventListener('change', function(event) {
   game = event.target.value;

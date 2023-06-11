@@ -118,7 +118,8 @@ export function histogramChart(id, data, threshold, options) {
     }
 
 	let default_nBin = 10
-	let default_threshold = "best"
+	let default_threshold = document.getElementById('score-select').value
+	console.log(default_threshold)
 	update(default_nBin, default_threshold)
 
 	// Listen to the button -> update if user change it
