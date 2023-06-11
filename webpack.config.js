@@ -5,6 +5,7 @@ module.exports = {
     entry: { 
         bundle: './src/index.js',
         login: './src/login.js',
+        game_graph: './src/game_graph.js',
     },
     output: {
         path: path.resolve(__dirname, 'docs'),
