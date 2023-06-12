@@ -56,7 +56,6 @@ export function histogramChart(id, data, threshold, options) {
 
 			
 		var bins = histogram(data);
-		console.log(bins);
 
 	
 		y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
@@ -67,7 +66,7 @@ export function histogramChart(id, data, threshold, options) {
 		
 		var u = svg.selectAll("rect")
 			.data(bins)
-		console.log(cfg.color)
+		
 		u
 			.enter()
 			.append("rect")
@@ -120,7 +119,7 @@ export function histogramChart(id, data, threshold, options) {
 				.attr("x", x(threshold[threshold_type]) + offset)
 				.attr("y", y(d3.max(bins, function(d) { return d.length; }))+50)
 				.text(inserttext + threshold[threshold_type].toString() )
-				.style("font-size", "15px")
+				.style("font-size", "16px")
 				.style("fill", "black")
 				.style("font-weight", "bold")
 				.attr("text-anchor", placement)
