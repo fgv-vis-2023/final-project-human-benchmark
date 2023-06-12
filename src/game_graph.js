@@ -33,6 +33,14 @@ logoutButton.addEventListener('click', () => {
     })
 })
 
+const colors = {
+  "atencao": ["#ef9797", "#B71C1C"],
+  "coordenacao": ["#b384ed", "#4A148C"],
+  "memoria": ["#74bb79", "#1B5E20"],
+  "percepcao": ["#feb68f", "#E65100"],
+  "raciocinio": ["#72c0fe", "#01579B"]
+}
+
 // const percentis = collection(db, 'percentis')
 // const pctScores = {}
 // getDocs(percentis).then((snapshot) => {
@@ -81,7 +89,7 @@ var pageLogic = function (game) {
       })
       avg_score = Math.round(avg_score*100 / count)/100
       d3.select(".histogram").select("svg").remove();
-      histogramChart(".histogram", userscores, {"best": best_score, "avg": avg_score, "recent": recent_score}, {"game": game})
+      histogramChart(".histogram", userscores, {"best": best_score, "avg": avg_score, "recent": recent_score}, {"color": colors[game], "game": game})
     });
   })
 }

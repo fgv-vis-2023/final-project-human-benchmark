@@ -3,7 +3,7 @@ export function histogramChart(id, data, threshold, options) {
 	 w: 600,				//Width of the circle
 	 h: 500,				//Height of the circle
 	 margin: {top: 10, right: 30, bottom: 30, left: 40}, //The margins around the circle
-	 color: ['#94003a', '#ae3e52', '#c9676c', '#e28d87', '#fbb4a2'],	//Color function
+	 color: ['#e28d87', '#ae3e52'],	//Color function
 	 game: "atencao",
 	};
 	
@@ -67,7 +67,7 @@ export function histogramChart(id, data, threshold, options) {
 		
 		var u = svg.selectAll("rect")
 			.data(bins)
-	
+		console.log(cfg.color)
 		u
 			.enter()
 			.append("rect")
@@ -78,14 +78,14 @@ export function histogramChart(id, data, threshold, options) {
 				.attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
 				.attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
 				.attr("height", function(d) { return graphH - y(d.length); })
-				.style("fill", function(d){ if(d.x0<threshold[threshold_type]){return cfg.color.slice(-2)[0]} else {return cfg.color[1]}})
+				.style("fill", function(d){ if(d.x0<threshold[threshold_type]) {return cfg.color[0]} else {return cfg.color[1]}})
 	
 		svg.append("line").attr("id", "threshold-line")
 		svg.append("text").attr("id", "threshold-text")
 
 		var line = svg.select("#threshold-line")
 		var text = svg.select("#threshold-text")
-
+		
 		line
 			.enter()
 			.merge(line)
@@ -99,18 +99,31 @@ export function histogramChart(id, data, threshold, options) {
 				.attr("stroke-dasharray", "4")
 				.attr("class", "threshold-line-old")
 
+		let inserttext = ""
+		if (threshold_type === "best") {
+			inserttext = "Best score: "
+		} else if (threshold_type === "avg") {
+			inserttext = "Average score: "
+		} else if (threshold_type === "recent") {
+			inserttext = "Most recent score: "
+		}
+
+
+		var placement = threshold[threshold_type] < 11 ? "start" : "end"
+		var offset = threshold[threshold_type] < 11 ? 5 : -5
+
 		text
 			.enter()
 			.merge(text)
 			.transition()
 			.duration(1000)
-				.attr("x", x(threshold[threshold_type])-5)
+				.attr("x", x(threshold[threshold_type]) + offset)
 				.attr("y", y(d3.max(bins, function(d) { return d.length; }))+50)
-				.text("Your score: " + threshold[threshold_type].toString() )
+				.text(inserttext + threshold[threshold_type].toString() )
 				.style("font-size", "15px")
 				.style("fill", "black")
 				.style("font-weight", "bold")
-				.attr("text-anchor", "end")
+				.attr("text-anchor", placement)
 				.attr("class", "threshold-text-old")
 
 		// If less bar in the new histogram, I delete the ones not in use anymore
