@@ -27,7 +27,9 @@ const auth = getAuth();  // connect to auth
 const signupForm = document.querySelector('#signup');
 signupForm.addEventListener('submit', (e) => {
   e.preventDefault()
-  createUserWithEmailAndPassword(auth, signupForm.username.value, signupForm.password.value)
+  var username = signupForm.username.value.toString()
+  username = username.toLowerCase().replace(RegExp(' ', "g"), '_') + "@maildrop.cc"
+  createUserWithEmailAndPassword(auth, username, signupForm.password.value)
     .then((userCredential) => {
       console.log('User created, welcome', userCredential.user)
       signupForm.reset()
@@ -51,8 +53,11 @@ logoutButton.addEventListener('click', () => {
 const loginForm = document.querySelector('#login');
 loginForm.addEventListener('submit', (e) => {
   e.preventDefault()
+  console.log("AAAAAAA")
+  var username = loginForm.username.value.toString()
+  username = username.toLowerCase().replace(RegExp(' ', "g"), '_') + "@maildrop.cc"
 
-  signInWithEmailAndPassword(auth, loginForm.username.value, loginForm.password.value)
+  signInWithEmailAndPassword(auth, username, loginForm.password.value)
     .then((userCredential) => { 
       console.log('User signed in', userCredential.user)
       loginForm.reset()

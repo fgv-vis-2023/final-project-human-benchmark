@@ -100,7 +100,7 @@ export function barChart(id, data, options) {
 		.attr("class", "tooltip")
 		.style("opacity", 0)
 		.style("position", "absolute")
-		.style("background-color", "Lavender")
+		.style("background-color", cfg.color[0])
 		.style("border", "solid")
 		.style("border-width", "2px")
 		.style("border-radius", "5px")
