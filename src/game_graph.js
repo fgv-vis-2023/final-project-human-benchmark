@@ -11,6 +11,7 @@ import {
 import * as d3 from 'd3';
 import 'parcoord-es/dist/parcoords.css';
 import { histogramChart } from './histogramChart.js';
+import { temporalChart } from './temporalChart.js';
 
 fetch("./firebaseConfig.json")
   .then(response => response.json())
@@ -69,13 +70,12 @@ var pageLogic = function (game) {
       let recent_score = 0
       let recent_date = 0
       let count = 0
-      let test = []
+      let specificuserscores = []
 
       snapshot.docs.forEach((doc) => {
-        const docdata = doc.data()
-        userscores.push(docdata)
+        let docdata = doc.data()
+        docdata["dia"] = docdata["dia"].toDate()
         if (docdata["email"] === useremail) {
-          test.push(docdata)
           if (docdata[game] > best_score) {
             best_score = docdata[game]
           }
@@ -85,11 +85,20 @@ var pageLogic = function (game) {
             recent_date = docdata["dia"]
             recent_score = docdata[game]
           }
+          specificuserscores.push(docdata)
         }
+        userscores.push(docdata)
       })
       avg_score = Math.round(avg_score*100 / count)/100
       d3.select(".histogram").select("svg").remove();
       histogramChart(".histogram", userscores, {"best": best_score, "avg": avg_score, "recent": recent_score}, {"color": colors[game], "game": game})
+
+      userscores.sort(  // sort by date
+        function(a, b) {
+          return a["dia"] - b["dia"]
+        })
+
+      temporalChart(".temporalChart", specificuserscores, userscores, {"color": colors[game], "game": game})
     });
   })
 }
@@ -100,7 +109,6 @@ pageLogic(select.value)
 var game = select.options[select.selectedIndex].value;
 select.addEventListener('change', function(event) {
   game = event.target.value;
-  console.log(game)
   pageLogic(game)
 })
 })
