@@ -12,6 +12,7 @@ import * as d3 from 'd3';
 import 'parcoord-es/dist/parcoords.css';
 import { histogramChart } from './histogramChart.js';
 import { temporalChart } from './temporalChart.js';
+import { barChart } from './barChart.js';
 
 fetch("./firebaseConfig.json")
   .then(response => response.json())
@@ -99,6 +100,13 @@ var pageLogic = function (game) {
         })
 
       temporalChart(".temporalChart", specificuserscores, userscores, {"color": colors[game], "game": game})
+
+      let category = document.getElementById('category-select').value
+      barChart(".barChart", userscores, {"color": colors[game], "game": game, "category": category})
+      d3.select("#category-select").on("change", function() {
+        category = this.value
+        barChart(".barChart", userscores, {"color": colors[game], "game": game, "category": category})
+      });
     });
   })
 }

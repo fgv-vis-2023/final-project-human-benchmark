@@ -164,11 +164,11 @@ onAuthStateChanged(auth, (user) => {
         else
             return "#000";
     })
-      .alpha(0.6)
+      .alpha(0.4)
       .margin(parmargin)
+      .brushMode("1D-axes")  // enable brushing;
       .render()
       .reorderable()
-      .brushMode("1D-axes")  // enable brushing;
       .mark(userscores.filter(d => d.email.toLowerCase() === useremail))
   })
 })

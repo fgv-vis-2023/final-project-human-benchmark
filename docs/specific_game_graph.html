@@ -19,6 +19,7 @@
     <!--Replace with your tailwind.css once created-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <script src = "https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-array.v2.min.js"></script>    
     <style>
         .nunito {
             font-family: 'poppins', font-sans;
@@ -247,7 +248,14 @@
                             <input type="checkbox" name="ShowMedian" id="ShowMedian">
                             <label for="ShowMedian">Show Global Median</label>
                           </div>
-                        <div class="pctBarChart" id="pctBarChart"></div>
+                        <div class="barChart" id="barChart"></div>
+                        <p>
+                            <select name="" id="category-select">
+                                <option value="exercicio">Group by Workout per Week</option>
+                                <option value="sentimento">Group by Mood</option>
+                                <option value="sono">Group by Sleep</option>
+                            </select>
+                        </p>
                 
                         <!--/Graph Card-->
 
