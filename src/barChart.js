@@ -96,6 +96,43 @@ export function barChart(id, data, options) {
 	var yAxis = svg.append("g")
 		.attr("class", "BarYAxis")
 
+	var tooltip = d3.select(".tooltip")
+		.attr("class", "tooltip")
+		.style("opacity", 0)
+		.style("position", "absolute")
+		.style("background-color", "Lavender")
+		.style("border", "solid")
+		.style("border-width", "2px")
+		.style("border-radius", "5px")
+		.style("padding", "5px")
+		.style("user-select", "none");
+
+	const mouseover = function(d) {
+		console.log("AAAAAAAA")
+		tooltip.style("opacity", 1)
+		d3.select(this)
+              .style("stroke", "black")
+			  .style("stroke-width", 2)
+              .style("opacity", 1)
+	}
+
+	const mouseleave = function(d) {
+		tooltip.style("opacity", 0)
+				// .style("top", `0px`)
+				// .style("left", `0px`)
+		d3.select(this)
+              .style("stroke", cfg.color[1])
+			  .style("stroke-width", 1)
+	}
+
+	const mousemove = function(d) {
+		tooltip.text(`Average score for ${d.category}: ${d.game.toFixed(2)}`)
+		const [xc, yc] = [event.pageX, event.pageY];
+
+		// tooltip.attr("transform", `translate(${30}, ${30})`);
+		tooltip.style("top", `${yc}px`).style("left", `${xc+40}px`)
+	};
+
 	function updateBar(groupedData) {
 
 		// Update the X axis
@@ -108,7 +145,7 @@ export function barChart(id, data, options) {
 		
 		// Create the u variable
 		var u = svg.selectAll("rect")
-			.data(groupedData)
+			.data(groupedData);
 		
 		u
 			.enter()
@@ -121,6 +158,14 @@ export function barChart(id, data, options) {
 			.attr("width", x.bandwidth())
 			.attr("height", function(d) { return graphH - y(d.game); })
 			.attr("fill", cfg.color[0])
+			.style("stroke", cfg.color[1])
+			.style("stroke-width", 1)
+
+		svg.selectAll("rect").data(groupedData)
+			.on("mousemove", mousemove)
+			.on("mouseleave", mouseleave)
+			.on("mouseover", mouseover)
+		
 		
 		// If less group in the new dataset, I delete the ones not in use anymore
 		u
