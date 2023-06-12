@@ -92,13 +92,15 @@
   <style>
     .title-container {
         display: flex;
+        flex-direction: column;
+        justify-content: center;
         align-items: center;
-        height: 100vh;
-        text-align: center;
+        height: 5450px;
     }
-
+    
     .title {
         font-size: 5rem;
+        margin-top: 250px;
         font-family: poppins;
         margin-left: 475px;
         animation: fade-in 3s ease-in;
@@ -106,12 +108,38 @@
 
     .subtitle {
         font-size: 1.7rem;
-        margin-top: 3rem;
+        margin-top: 2.5rem;
         margin-left: 475px;
         opacity: 0;
         animation: fade-in 3s;
         animation-delay: 2s;
         animation-fill-mode: forwards;
+        position: relative;
+        left: 2.5rem;
+
+    }
+
+    .pesquisatitle {
+        font-size: 1.7rem;
+        margin-top: 20rem;
+        margin-bottom: 2rem;
+        text-align: left;
+        margin-left: 100px;
+    }
+    
+    .pesquisatext {
+        text-align: justify;
+        font-size: 1.4rem;
+        margin-left: 100px;
+        margin-bottom: 1.3rem;
+    }
+
+    
+    .ref {
+        text-align: justify;
+        font-size: 1.4rem;
+        margin-left: 100px;
+        margin-top: 10rem;
     }
     @keyframes fade-in {
         0% {
@@ -140,13 +168,141 @@
         <div class="mt-8">
             <h1 class="title text-3xl font-bold">MindTrack</h1>
             <h2 class="subtitle text-xl mt-2 text-gray-600">A journey to a sharper mind</h2>
-        </div>
+            <h3 class="pesquisatitle text-xl mt-2 text-gray-600 font-bold">Our project</h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-600">MindTrack is a college project developed with the intention of making cognitive games more <b>enjoyable</b>, <b>accessible</b>, <b>cohesive</b>, and <b>informative</b>.</h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-600">It's <b>enjoyable</b> because you can test your abilities in the five major cognitive areas - Attention, Coordination, Memory, Perception, and Reasoning - through engaging, fast-paced games. You can compare your results with other players and witness your scores improving over time.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-600">It's <b>accessible</b> because there's no paywall for any of our services, including the analyses and results after playing the games. We believe that a project based on data provided by the community has the moral responsibility to give its conclusions back in return.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-600">It's <b>cohesive</b> because we conducted extensive research to determine the games that would best test your cognitive capabilities. This means that all our tests are based on actual studies conducted by the scientific community to better evaluate users as a whole.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-600">It's <b>informative</b> because one of our main ambitions is to deeply analyze all the data gathered through these tests. We aim to present interesting and well-thought-out results that address all the questions asked, and make all of this information open and easy for you to read. However, we are still in the process of developing this final part. Rest assured that we have a highly skilled team working on it, and we will provide more information as soon as possible.</h3>
+            
+            
+            <h3 class="pesquisatitle text-xl mt-2 text-gray-600 font-bold">Our research</h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-600">Our tests were heavily inspired by <i>CogniFit</i>, a digital healthcare service designed to support the evaluation of an individual's cognitive well-being. More specifically, our games were influenced by the following tests: <i>Equivalencies Test INH-REST</i>, <i>Simultaneity Test DIAT-SHIF</i>, <i>Concentration Test VISMEM-PLAN</i>,  <i>Estimation Test EST-I</i> and <i>VIPER-PLAN Programming Test</i>.</h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-600">We have developed five games, each designed to assess specific cognitive abilities: <b>Attention</b>, <b>Coordination</b>, <b>Memory</b>, <b>Perception</b>, and <b>Reasoning</b>. While the names assigned to the games reflect the primary ability they target, it's worth noting that many of them encompass multiple cognitive domains.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-600">Here is the study behind each test:            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-align: center; margin-top:5rem;"><b>GAME #1 - ATTENTION</b></h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500">Attention is the ability to selectively filter out distractions and concentrate on important information.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500">This test was based on the <b>Stroop Test</b>, published in the <i>Journal of Experimental Psychology</i> (Stroop, 1935). In this game, you will be able to test the following attention capabilities:             </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-indent: 2rem;"><b>Inhibition</b> - the ability to restrain or regulate impulsive responses, employing attention and reasoning to generate appropriate responses.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-indent: 2rem;"><b>Updating</b> - the ability to monitor one's actions and behavior while performing a task, ensuring that it aligns with the intended plan of action.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-align: center; margin-top:5rem;"><b>GAME #2 - COORDINATION</b>             </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500">Coordination is the ability to execute precise and well-organized movements with efficiency.          </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500">In this game, you will test the following coordination capabilities:            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-indent: 2rem;"><b>Hand-eye coordination </b>- the ability in performing activities that use both the hands and eyes.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-indent: 2rem;"><b>Response Time</b> - the time between perceiving a stimulus and initiating a corresponding response.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500">In addition, you will also be able to test one attention capability:            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-indent: 2rem;"><b>Divided Attention</b> -  the ability to focus on different stimuli at the same time.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500">And one perception (the meaning of perception will be explained shortly) capability:            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-indent: 2rem;"><b>Visual Perception</b> - the ability to interpret and make sense of information derived from the effects of visible light as it reaches the eye.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-align: center; margin-top:5rem;"><b>GAME #3 - MEMORY</b>             </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500">Memory is the ability to retain and utilize newly acquired information, as well as retrieve memories from the past.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500">This test was based on the <b>Corsi block-tapping test</b> (Corsi, 1972; Kessels et al., 2000; Wechsler, 1945). In it, you will test the following memory capabilities:            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-indent: 2rem;"><b>Short Term Memory</b> - the ability to temporarily hold a limited amount of information for a short period of time.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-indent: 2rem;"><b>Visual Short Term Memory</b> - the ability to temporarily hold a limited amount of visual information for a short period of time.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-indent: 2rem;"><b>Working Memory</b> -  a type of short term memory, this is the ability to store and manipulate temporary information, facilitating the execution of more complex cognitive tasks            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500">You will also test one perception capability:            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-indent: 2rem;"> <b>Spatial Perception</b> - the ability to assess and comprehend the arrangement or organization of objects and elements within a given space.           </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500">And one reasoning (the meaning of reasoning will be explained shortly) capability:            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-indent: 2rem;"> <b>Planning</b> - the ability to anticipate and mentally prepare for the appropriate execution of a task by considering various aspects and potential outcomes.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-align: center; margin-top:5rem;"><b>GAME #4 - PERCEPTION</b>             </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500">Perception is the ability to interpret and make sense of the sensory input received from the environment.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500">This game tests the following perception capability:            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-indent: 2rem;"><b>Estimation</b> - the ability to asses the situation and make predictions about, in this case, speed.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-align: center; margin-top:5rem;"><b>GAME #5 - REASONING</b>              </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500">Reasoning is the ability to effectively utilize and manipulate information obtained through various sensory channels.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500">This game is inspired by the <i>Porteus Maze test</i> (Porteus, 1950) and it tests the following reasoning capacities:            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-indent: 2rem;"><b>Planning</b> - the ability to anticipate and mentally prepare for the appropriate execution of a task by considering various aspects and potential outcomes.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500">And the following perception capacities:            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-indent: 2rem;"><b>Spatial Perception</b> - the ability to assess and comprehend the arrangement or organization of objects and elements within a given space.            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-500" style="text-indent: 2rem;"><b>Visual Scanning</b> - the ability to swiftly and effectively locate relevant information in our surroundings through active visual exploration            </h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-400" style="text-align: center; margin-top:5rem;">*** Please note that this website does not intend to make any medical claims. It has been created purely for entertainment purposes, offering visualizations related to your test results. If you have concerns about your cognitive abilities, we strongly recommend consulting your healthcare provider for appropriate guidance. ***            </h3>
+
+            <h3 class="pesquisatitle text-xl mt-2 text-gray-600 font-bold">Our references</h3>
+            
+            <h3>
+                <a href="https://www.cognifit.com/br/en/science/estimation" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">CogniFit. "Estimation"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://www.cognifit.com/br/en/science/working-memory" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">CogniFit. "Working Memory"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://www.cognifit.com/br/en/science/visual" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">CogniFit. "Visual"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://www.cognifit.com/br/en/science/shortterm-memory" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">CogniFit. "Short-Term Memory"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://www.cognifit.com/br/en/science/divided-attention" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">CogniFit. "Divided Attention"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://www.cognifit.com/br/en/science/visual-perception" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">CogniFit. "Visual Perception"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://www.cognifit.com/br/en/science/response-time" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">CogniFit. "Response Time"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://www.cognifit.com/br/en/science/eye-hand-coordination" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">CogniFit. "Eye-Hand Coordination"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://www.cognifit.com/br/en/science/updating" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">CogniFit. "Updating"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://www.cognifit.com/br/en/science/inhibition" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">CogniFit. "Inhibition"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://www.cognifit.com/battery-of-tests/viper-plan-test/programming-test" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">CogniFit. "VIPER Plan Test - Programming Test"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://www.cognifit.com/battery-of-tests/vismem-plan-test/concentration-test" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">CogniFit. "Vismem Plan Test - Concentration Test"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://www.cognifit.com/battery-of-tests/diat-shif-test/simultaneity-test" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">CogniFit. "DIAT-SHIF Test - Simultaneity Test"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://www.cognifit.com/battery-of-tests/inh-rest-test/equivalencies-test" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">CogniFit. "INH-REST Test - Equivalencies Test"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://www.cognifit.com/br/en/battery-of-tests/est-i-test/estimation-test" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">CogniFit. "EST-I Test - Estimation Test"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://www.cognifit.com/cognitive-assessment/cognitive-test" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">CogniFit. "Cognitive Test"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://en.wikipedia.org/wiki/Stroop_effect" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">Wikipedia. "Stroop effect"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://en.wikipedia.org/wiki/Porteus_Maze_test" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">Wikipedia. "Porteus Maze test"</a>
+              </h3>
+              
+              <h3>
+                <a href="https://en.wikipedia.org/wiki/Corsi_block-tapping_test" class="pesquisatext text-xl mt-2 text-gray-400 underline" target="_blank">Wikipedia. "Corsi block-tapping test"</a>
+              </h3>
+                      
+                    </div>
     </div>
     <img src="brain.png" alt="Brain" class="brain-image" draggable="false">
+    
 </div>
 
 
 
-</body>
 
+</body>
 </html>
