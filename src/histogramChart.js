@@ -108,11 +108,11 @@ export function histogramChart(id, data, threshold, options) {
 
 		let inserttext = ""
 		if (threshold_type === "best") {
-			inserttext = "Best score: "
+			inserttext = "Your best score: "
 		} else if (threshold_type === "avg") {
-			inserttext = "Average score: "
+			inserttext = "Your average score: "
 		} else if (threshold_type === "recent") {
-			inserttext = "Most recent score: "
+			inserttext = "Your most recent score: "
 		}
 
 
