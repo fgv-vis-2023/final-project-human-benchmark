@@ -23,7 +23,7 @@ export function sampleScore(mean, stddev) {
 export function getPercentage(score, pctArray) {
     let pct = 0;
     for (let i = 0; i <= 100; i++) {
-        if (score > pctArray[100]) {
+        if (score >= pctArray[100]) {
             pct = 100;
             break;
         }

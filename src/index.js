@@ -91,6 +91,7 @@ onAuthStateChanged(auth, (user) => {
         {axis: "Reasoning", value: getPercentage(doc.data().raciocinio, pctScores["raciocinio"]), areaName: day, index: i},
         {axis: "Memory", value: getPercentage(doc.data().memoria, pctScores["memoria"]), areaName: day, index: i}
       ]})
+      console.log(getPercentage(doc.data().percepcao, pctScores["percepcao"]))
   })
     userscores.reverse()
     // userscores = userscores.map((doc) => doc.slice(1, 6))
