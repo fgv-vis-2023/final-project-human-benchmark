@@ -1,8 +1,8 @@
 export function temporalChart(id, data, fulldata, options) {
 	var cfg = {
-	 w: 600,				//Width of the circle
-	 h: 500,				//Height of the circle
-	 margin: {top: 10, right: 30, bottom: 30, left: 40}, //The margins around the circle
+	 w: 650,				//Width of the circle
+	 h: 550,				//Height of the circle
+	 margin: {top: 50, right: 80, bottom: 30, left: 40}, //The margins around the circle
 	 color: ['#e28d87', '#ae3e52'],	//Color function
 	 game: "atencao",
 
@@ -191,4 +191,43 @@ export function temporalChart(id, data, fulldata, options) {
 				.y(function(d) { return y(d[cfg.game]) })
 				)
 	});
+
+	const prettyNames = {
+		"atencao": "Attention",
+		"coordenacao": "Coordination",
+		"percepcao": "Perception",
+		"raciocinio": "Reasoning",
+		"memoria": "Memory"
+	}
+
+	svg.append("text")
+          .attr("x", -10)             
+          .attr("y", -28)
+          .attr("text-anchor", "start")
+          .attr("class", "font-sans")  
+          .text(`Your ${prettyNames[cfg.game]} scores throughout time:`)
+          .style("font-size", "18px") 
+          .style("font-weight", "bold")
+          .style("font-family", "verdana")
+          .style("fill", "#000")
+
+	svg.append("text")
+          .attr("x", -20)             
+          .attr("y", -8)
+          .attr("text-anchor", "start")
+          .attr("class", "font-sans")  
+          .text(`Score`)
+          .style("font-size", "12px") 
+          .style("font-family", "verdana")
+          .style("fill", "#000")
+
+	svg.append("text")
+          .attr("x", graphW+5)             
+          .attr("y", graphH+5)
+          .attr("text-anchor", "start")
+          .attr("class", "font-sans")  
+          .text(`Time`)
+          .style("font-size", "12px") 
+          .style("font-family", "verdana")
+          .style("fill", "#000")
 }

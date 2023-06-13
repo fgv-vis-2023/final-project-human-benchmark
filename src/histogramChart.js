@@ -1,8 +1,8 @@
 export function histogramChart(id, data, threshold, options) {
 	var cfg = {
-	 w: 600,				//Width of the circle
+	 w: 650,				//Width of the circle
 	 h: 500,				//Height of the circle
-	 margin: {top: 10, right: 30, bottom: 30, left: 40}, //The margins around the circle
+	 margin: {top: 50, right: 80, bottom: 30, left: 40}, //The margins around the circle
 	 color: ['#e28d87', '#ae3e52'],	//Color function
 	 game: "atencao",
 	};
@@ -16,6 +16,14 @@ export function histogramChart(id, data, threshold, options) {
 
 	const graphW = cfg.w - cfg.margin.left - cfg.margin.right;
 	const graphH = cfg.h - cfg.margin.top - cfg.margin.bottom;
+
+	const prettyNames = {
+		"atencao": "Attention",
+		"coordenacao": "Coordination",
+		"percepcao": "Perception",
+		"raciocinio": "Reasoning",
+		"memoria": "Memory"
+	}
 
 	
 	// d3.select(id).select("svg").remove();
@@ -146,4 +154,35 @@ export function histogramChart(id, data, threshold, options) {
 		default_threshold = this.value
 		update(default_nBin, default_threshold);
 	});
+
+	svg.append("text")
+          .attr("x", -10)             
+          .attr("y", -28)
+          .attr("text-anchor", "start")
+          .attr("class", "font-sans")  
+          .text(`Histogram of all ${prettyNames[cfg.game]} scores:`)
+          .style("font-size", "18px") 
+          .style("font-weight", "bold")
+          .style("font-family", "verdana")
+          .style("fill", "#000")
+
+	svg.append("text")
+          .attr("x", -20)             
+          .attr("y", -8)
+          .attr("text-anchor", "start")
+          .attr("class", "font-sans")  
+          .text(`Count`)
+          .style("font-size", "12px") 
+          .style("font-family", "verdana")
+          .style("fill", "#000")
+
+	svg.append("text")
+          .attr("x", graphW+5)             
+          .attr("y", graphH+5)
+          .attr("text-anchor", "start")
+          .attr("class", "font-sans")  
+          .text(`Score`)
+          .style("font-size", "12px") 
+          .style("font-family", "verdana")
+          .style("fill", "#000")
 }

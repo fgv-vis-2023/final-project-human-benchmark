@@ -47,7 +47,7 @@ getDocs(percentis).then((snapshot) => {
 
                   
 // Radial graph
-var radarmargin = {top: 100, right: 100, bottom: 100, left: 100},
+var radarmargin = {top: 130, right: 100, bottom: 100, left: 100},
 radarwidth = Math.min(700, window.innerWidth - 10) - radarmargin.left - radarmargin.right,
 radarheight = Math.min(radarwidth, window.innerHeight - radarmargin.top - radarmargin.bottom - 20);
 
@@ -83,7 +83,6 @@ onAuthStateChanged(auth, (user) => {
     let userscores = []
     snapshot.docs.forEach((doc, i) => {
       var day = doc.data().dia.toDate().toLocaleDateString()
-      console.log(doc.data(), day)
       userscores.push({"key": day, "values": [
         {axis: "Attention", value: getPercentage(doc.data().atencao, pctScores["atencao"]), areaName: day, index: i},
         {axis: "Coordination", value: getPercentage(doc.data().coordenacao, pctScores["coordenacao"]) , areaName: day, index: i},
@@ -91,7 +90,6 @@ onAuthStateChanged(auth, (user) => {
         {axis: "Reasoning", value: getPercentage(doc.data().raciocinio, pctScores["raciocinio"]), areaName: day, index: i},
         {axis: "Memory", value: getPercentage(doc.data().memoria, pctScores["memoria"]), areaName: day, index: i}
       ]})
-      console.log(getPercentage(doc.data().percepcao, pctScores["percepcao"]))
   })
     userscores.reverse()
     // userscores = userscores.map((doc) => doc.slice(1, 6))
@@ -116,9 +114,11 @@ onAuthStateChanged(auth, (user) => {
   // Parallel coordinates graph
   const pQuery = query(scores, orderBy('dia', 'asc'))
   
-  var parmargin = {top: 50, right: 50, bottom: 50, left: 100},
+  var parmargin = {top: 110, right: 50, bottom: 50, left: 10},
   parwidth = Math.min(1000, window.innerWidth - 10) - parmargin.left - parmargin.right,
   parheight = Math.min(300, window.innerHeight - parmargin.top - parmargin.bottom - 20);
+
+  var graphW = parwidth + parmargin.left + parmargin.right;
   
   var parcoord = d3.select(".parcoords")
   .style("width",  parwidth + parmargin.left + parmargin.right + "px")
@@ -171,9 +171,25 @@ onAuthStateChanged(auth, (user) => {
       .render()
       .reorderable()
       .mark(userscores.filter(d => d.email.toLowerCase() === useremail))
+
+
+      // make the text visible
+      d3.select(".parcoords").select("svg")
+        .append("text")
+          .attr("x", (graphW / 2))             
+          .attr("y", 50)
+          .attr("text-anchor", "middle")
+          .attr("class", "font-sans")  
+          .text("How your most recent score compares")
+          .style("font-size", "18px") 
+          .style("font-weight", "bold")
+          .style("font-family", "verdana")
+          .style("fill", "#000")
+          .append("tspan")
+          .attr("x", (graphW / 2)) 
+          .attr("dy", "1.2em")
+          .text("to other users' most recent scores:");
+
   })
 })
 })
-
-
-// Parallel coordinates

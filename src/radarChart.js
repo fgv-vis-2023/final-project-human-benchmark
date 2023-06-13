@@ -86,6 +86,8 @@ export function RadarChart(id, data, options) {
 
 	//Remove whatever chart with the same id/class was present before
 	d3.select(id).select("svg").remove();
+
+	const graphW = cfg.w + cfg.margin.left + cfg.margin.right;
 	
 	//Initiate the radar chart SVG
 	var svg = d3.select(id).append("svg")
@@ -361,5 +363,21 @@ export function RadarChart(id, data, options) {
 
 svg.select(".legendOrdinal")
   .call(legendOrdinal);
+
+svg.append("text")
+  .attr("x", (graphW / 2))             
+  .attr("y", 20)
+  .attr("text-anchor", "middle")
+  .attr("class", "graphTitle")  
+  .attr("data-html", "true")
+  .text("How good your most recent scores are")
+  .style("font-size", "18px") 
+//   .style("text-decoration", "underline") 
+  .style("font-weight", "bold")
+  .style("font-family", "verdana")
+  .append("tspan")
+  .attr("x", (graphW / 2)) 
+  .attr("dy", "1.2em")
+  .text("when compared to the best (by %):")
 	
 }//RadarChart
