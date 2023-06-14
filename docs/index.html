@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tailwind Starter Template - Minimal Admin Template: Tailwind Toolbox</title>
+    <title>MindTrack</title>
+
     <meta name="description" content="description here">
     <meta name="keywords" content="keywords,here">
 
@@ -13,7 +14,6 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
-    <!--Replace with your tailwind.css once created-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
 
     <style>
@@ -101,28 +101,26 @@
     }
     
     .title {
+        position: absolute;
+        top: 275px; 
         font-size: 5rem;
-        margin-top: 250px;
-        margin-left: 475px;
+        left: 475px;
         animation: fade-in 3s ease-in;
     }
 
     .subtitle {
+        position: absolute;
+        top: 340px; 
+        left: 480px;
         font-size: 1.7rem;
-        margin-top: 2.5rem;
-        margin-left: 475px;
         opacity: 0;
         animation: fade-in 3s;
         animation-delay: 2s;
         animation-fill-mode: forwards;
-        position: relative;
-        left: 2.5rem;
-
     }
 
     .pesquisatitle {
         font-size: 1.7rem;
-        margin-top: 20rem;
         margin-bottom: 2rem;
         text-align: left;
         margin-left: 100px;
