@@ -69,20 +69,22 @@
             <i class="fas fa-home fa-fw mr-3 text-indigo-400"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Home</span>
         </a>
     </li>
-    
-  <li class="my-2 md:my-0 ">
-    <a href="webpage/dist/profile.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
-        <i class="fas fa-user-circle fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Profile</span>
-    </a>
-</li>
 
 <li class="my-2 md:my-0">
   <a href="webpage/dist/tests.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
       <i class="fa fa-brain fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Tests</span>
   </a>
   </li>
+
+  
+  <li class="my-2 md:my-0 ">
+    <a href="webpage/dist/graphs.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
+        <i class="fas fa-user-circle fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Profile</span>
+    </a>
+</li>
+
     <li class="my-2 md:my-0">
-        <a href="webpage/dist/graphs.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
+        <a href="specific_game_graph.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
             <i class="fas fa-chart-area fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Analytics</s*pan>
         </a>
     </li>
@@ -139,7 +141,39 @@
         text-align: justify;
         font-size: 1.4rem;
         margin-left: 100px;
-        margin-top: 10rem;
+        margin-top: 10rem;}
+
+        .scroll-button {
+        position: absolute;
+        top: calc(100vh - 100px);
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 999;
+        background-color: #585858;
+        color: white;
+        padding: 10px 20px;
+        cursor: pointer;
+        width: 50px; 
+        height: 50px;
+        border-radius: 50%;
+        opacity: 0.5; 
+        transition: background-color 0.3s ease;
+    }
+
+      .scroll-button::after {
+    content: ''; 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%) rotate(135deg); 
+    width: 10px; 
+    height: 10px; 
+    border-top: 2px solid #000; 
+    border-right: 2px solid #000;
+    }
+
+    .scroll-button:hover {
+        background-color: #718096;
     }
     @keyframes fade-in {
         0% {
@@ -169,15 +203,20 @@
             <h1 class="title text-3xl font-bold">MindTrack</h1>
             <h2 class="subtitle text-xl mt-2 text-gray-600">A journey to a sharper mind</h2>
 
-            
+            <button class="scroll-button" onclick="scrollToContent(700)"></button>
+
+
             <h3 class="pesquisatitle text-xl mt-2 text-gray-600 font-bold">Our project</h3>
             <h3 class="pesquisatext text-xl mt-2 text-gray-600">MindTrack is a college project developed with the intention of making cognitive games more <b>enjoyable</b>, <b>accessible</b>, <b>cohesive</b>, and <b>informative</b>.</h3>
+            
             <h3 class="pesquisatext text-xl mt-2 text-gray-600">It's <b>enjoyable</b> because you can test your abilities in the five major cognitive areas - Attention, Coordination, Memory, Perception, and Reasoning - through engaging, fast-paced games. You can compare your results with other players and witness your scores improving over time.            </h3>
             <h3 class="pesquisatext text-xl mt-2 text-gray-600">It's <b>accessible</b> because there's no paywall for any of our services, including the analyses and results after playing the games. We believe that a project based on data provided by the community has the moral responsibility to give its conclusions back in return.            </h3>
             <h3 class="pesquisatext text-xl mt-2 text-gray-600">It's <b>cohesive</b> because we conducted extensive research to determine the games that would best test your cognitive capabilities. This means that all our tests are based on actual studies conducted by the scientific community to better evaluate users as a whole.            </h3>
             <h3 class="pesquisatext text-xl mt-2 text-gray-600">It's <b>informative</b> because one of our main ambitions is to deeply analyze all the data gathered through these tests. We aim to present interesting and well-thought-out results that address all the questions asked, and make all of this information open and easy for you to read. However, we are still in the process of developing this final part. Rest assured that we have a highly skilled team working on it, and we will provide more information as soon as possible.</h3>
             
-            
+            <button class="scroll-button" style="top: 1350px;" onclick="scrollToContent(800)"></button>
+
+
             <h3 class="pesquisatitle text-xl mt-2 text-gray-600 font-bold">Our research</h3>
             <h3 class="pesquisatext text-xl mt-2 text-gray-600">Our tests were heavily inspired by <i>CogniFit</i>, a digital healthcare service designed to support the evaluation of an individual's cognitive well-being. More specifically, our games were influenced by the following tests: <i>Equivalencies Test INH-REST</i>, <i>Simultaneity Test DIAT-SHIF</i>, <i>Concentration Test VISMEM-PLAN</i>,  <i>Estimation Test EST-I</i> and <i>VIPER-PLAN Programming Test</i>.</h3>
             <h3 class="pesquisatext text-xl mt-2 text-gray-600">We have developed five games, each designed to assess specific cognitive abilities: <b>Attention</b>, <b>Coordination</b>, <b>Memory</b>, <b>Perception</b>, and <b>Reasoning</b>. While the names assigned to the games reflect the primary ability they target, it's worth noting that many of them encompass multiple cognitive domains.            </h3>
@@ -304,6 +343,15 @@
 </div>
 
 
+
+<script>
+  function scrollToContent(x) {
+      window.scrollTo({
+          top: window.pageYOffset + x,
+          behavior: 'smooth'
+      });
+  }
+</script>
 
 
 </body>
