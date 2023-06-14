@@ -41,6 +41,39 @@
             transition: ease-in-out all .3s;
             z-index: 9999;
         }
+
+        .scroll-button {
+        position: absolute;
+        top: calc(100vh - 100px);
+        left: 80%;
+        transform: translateX(-50%);
+        z-index: 999;
+        background-color: #585858;
+        color: white;
+        padding: 10px 20px;
+        cursor: pointer;
+        width: 50px; 
+        height: 50px;
+        border-radius: 50%;
+        opacity: 0.5; 
+        transition: background-color 0.3s ease;
+    }
+
+      .scroll-button::after {
+    content: ''; 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%) rotate(135deg); 
+    width: 10px; 
+    height: 10px; 
+    border-top: 2px solid #000; 
+    border-right: 2px solid #000;
+    }
+
+    .scroll-button:hover {
+        background-color: #718096;
+    }
         
         #sidebar span {
             opacity: 0;
@@ -124,12 +157,10 @@
                             
                             <div id="userMenu" class="bg-white nunito rounded shadow-md mt-2 absolute mt-12 top-0 right-0 min-w-full overflow-auto z-30 invisible">
                                 <ul class="list-reset">
-                                    <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-indigo-400 hover:text-white no-underline hover:no-underline">My account</a></li>
-                                    <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-indigo-400 hover:text-white no-underline hover:no-underline">Notifications</a></li>
                                     <li>
                                         <hr class="border-t mx-2 border-gray-400">
                                     </li>
-                                    <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-indigo-400 hover:text-white no-underline hover:no-underline" id="logout">Logout</a></li>
+                                    <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-indigo-400 hover:text-white no-underline hover:no-underline" id="logout"></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -151,8 +182,8 @@
                     <div class="max-w-full lg:max-w-3xl xl:max-w-5xl">
 
                         <!--Graph Card-->
-                        <div class="histogram" ></div>
-                        <p>
+                        <div class="histogram" style = "position: absolute; right:23%;"></div>
+                        <p style = "position: absolute; top: 400px;">
                             <label>Number of bins: </label>
                             <input type="number" min="1" max="100" step="1" value="10" id="nBin">
                             <select name="" id="score-select">
@@ -161,16 +192,18 @@
                                 <option value="recent">Recent Score</option>
                             </select>
                         </p>
-                        <div class="temporalChart"></div>
-                        <div>
+                        <button class="scroll-button" onclick="scrollToContent(800)"></button>
+
+                        <div class="temporalChart" style = "position: absolute; right:23%; top: 800px;"></div>
+                        <div style = "position: absolute; top: 900px;">
                             <input type="checkbox" name="ShowMean" id="ShowMean" checked>
                             <label for="ShowMean">Show Global Average</label>
                             <input type="checkbox" name="ShowMedian" id="ShowMedian">
                             <label for="ShowMedian">Show Global Median</label>
                           </div>
-                        <div class="barChart" id="barChart"></div>
+                        <div class="barChart" id="barChart" style = "position: absolute; right:23%; top: 1500px;" ></div>
                         <div class="tooltip" id="barChartTooltip"></div>
-                        <p>
+                        <p style = "position: absolute; right:23%; top: 1600px;">
                             <select name="" id="category-select">
                                 <option value="exercicio">Group by Workout per Week</option>
                                 <option value="sentimento">Group by Mood</option>
@@ -183,28 +216,18 @@
         </div>
     </div>
 
-    <script>
-        /*Toggle dropdown list*/
-        /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
-
-        var userMenuDiv = document.getElementById("userMenu");
-        var userMenu = document.getElementById("userButton");
-
-        document.onclick = check;
-
-
-        function checkParent(t, elm) {
-            while (t.parentNode) {
-                if (t == elm) {
-                    return true;
-                }
-                t = t.parentNode;
-            }
-            return false;
-        }
-    </script>
-
 </body>
+
+
+<script>
+    function scrollToContent(x) {
+        window.scrollTo({
+            top: window.pageYOffset + x,
+            behavior: 'smooth'
+        });
+    }
+  </script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.13.0/d3-legend.js"></script>
 <script src="game_graph.js"></script>
 </html>
