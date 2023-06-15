@@ -129,12 +129,11 @@
 </div>
 
     <div class="flex flex-row flex-wrap flex-1 flex-grow content-start pl-16">
-
         <div class="h-40 lg:h-20 w-full flex flex-wrap">
             <nav id="header" class="w-full lg:max-w-sm flex items-center border-b-1 border-gray-300 order-2 lg:order-1">
-
-                <div class="px-2 w-full">
-                    <select name="" class="bg-gray-300 border-2 border-gray-200 rounded-full w-full py-3 px-4 text-gray-500 font-bold leading-tight focus:outline-none focus:bg-white focus:shadow-md" id="test-select">
+                <div class="px-2 w-full flex items-center justify-end absolute top-3 right-5">
+                    <h1 class="nunito" style = "position: absolute; right:700px">Please select the game to check the corresponding visualizations:</h1>
+                    <select name="" class="bg-gray-300 border-2 border-gray-200 rounded-full py-3 px-4 text-gray-500 font-bold leading-tight focus:outline-none focus:bg-white focus:shadow-md" id="test-select" style="margin-right: 5rem;">
                         <option value="atencao">Attention</option>
                         <option value="coordenacao">Coordination</option>
                         <option value="percepcao">Perception</option>
@@ -142,19 +141,13 @@
                         <option value="memoria">Memory</option>
                     </select>
                 </div>
-
             </nav>
             <nav id="header1" class="w-auto flex-1 border-b-1 border-gray-300 order-1 lg:order-2">
 
                 <div class="flex h-full justify-between items-center">
-
-    
                     <!--Menu-->
-
                     <div class="flex relative inline-block pr-6">
-
                         <div class="relative text-sm">
-                            
                             <div id="userMenu" class="bg-white nunito rounded shadow-md mt-2 absolute mt-12 top-0 right-0 min-w-full overflow-auto z-30 invisible">
                                 <ul class="list-reset">
                                     <li>
