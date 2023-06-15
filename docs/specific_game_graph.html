@@ -44,7 +44,7 @@
 
         .scroll-button {
         position: absolute;
-        top: calc(100vh - 100px);
+        top: calc(100vh - 90px);
         left: 80%;
         transform: translateX(-50%);
         z-index: 999;
@@ -116,13 +116,13 @@
       
       <li class="my-2 md:my-0 ">
         <a href="webpage/dist/graphs.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
-            <i class="fas fa-user-circle fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Profile</span>
+            <i class="fas fa-chart-line fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Progress</span>
         </a>
     </li>
 
         <li class="my-2 md:my-0">
             <a href="specific_game_graph.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
-                <i class="fas fa-chart-area fa-fw mr-3 text-indigo-400"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Analytics</s*pan>
+                <i class="fas fa-chart-bar fa-fw mr-3 text-indigo-400"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Game <br> Graphs</s*pan>
             </a>
         </li>
     </ul>
@@ -132,7 +132,8 @@
         <div class="h-40 lg:h-20 w-full flex flex-wrap">
             <nav id="header" class="w-full lg:max-w-sm flex items-center border-b-1 border-gray-300 order-2 lg:order-1">
                 <div class="px-2 w-full flex items-center justify-end absolute top-3 right-5">
-                    <h1 class="nunito" style = "position: absolute; right:700px">Please select the game to check the corresponding visualizations:</h1>
+                    <h1 class="nunito" style =  "position: absolute; right:645px; font-size: 19px;  top: 33px;">
+                        Please select the game to see the corresponding visualizations.</h1>
                     <select name="" class="bg-gray-300 border-2 border-gray-200 rounded-full py-3 px-4 text-gray-500 font-bold leading-tight focus:outline-none focus:bg-white focus:shadow-md" id="test-select" style="margin-right: 5rem;">
                         <option value="atencao">Attention</option>
                         <option value="coordenacao">Coordination</option>
@@ -165,7 +166,7 @@
 
 
         <!--Graph Content -->
-        <div id="main-content" class="w-full flex-1" >
+        <div id="main-content" class="w-full flex-1" style="height: 2125px;">
 
             <div class="flex flex-1 flex-wrap">
 
@@ -175,29 +176,40 @@
                     <div class="max-w-full lg:max-w-3xl xl:max-w-5xl">
 
                         <!--Graph Card-->
-                        <div class="histogram" style = "position: absolute; right:23%;"></div>
-                        <p style = "position: absolute; top: 400px;">
-                            <label>Number of bins: </label>
-                            <input type="number" min="1" max="100" step="1" value="10" id="nBin">
-                            <select name="" id="score-select">
-                                <option value="best">Best Score</option>
-                                <option value="avg">Average Score</option>
-                                <option value="recent">Recent Score</option>
-                            </select>
-                        </p>
-                        <button class="scroll-button" onclick="scrollToContent(800)"></button>
+                        <div class="histogram" style="position: absolute; right: 23%; top: 140px;"></div>
+                            <p style="position: absolute; top: 200px; left:120px;">
+                                <label class="nunito">Number of bins:</label>
+                                <input type="number" min="1" max="100" step="1" value="10" id="nBin">
+                            </p>
+                            <p style="position: absolute; top: 245px; left:130px;">
+                                <label class="nunito">Score:</label>
+                                <select name="" id="score-select">
+                                    <option class="nunito" value="best">Best Score</option>
+                                    <option class="nunito" value="avg">Average Score</option>
+                                    <option class="nunito" value="recent">Recent Score</option>
+                                </select>
+                            </p>
+                        </div>
 
-                        <div class="temporalChart" style = "position: absolute; right:23%; top: 800px;"></div>
-                        <div style = "position: absolute; top: 900px;">
+                        <button class="scroll-button" onclick="scrollToContent(775)" ></button>
+
+                        <div class="temporalChart" style = "position: absolute; right:23%; top: 850px;"></div>
+                        <div style = "position: absolute; top: 900px; left:130px;">
                             <input type="checkbox" name="ShowMean" id="ShowMean" checked>
-                            <label for="ShowMean">Show Global Average</label>
+                            <label for="ShowMean" class="nunito">Show Global Average</label>
+                        </div>
+                        <div style = "position: absolute; top: 925px; left:130px;">
+
                             <input type="checkbox" name="ShowMedian" id="ShowMedian">
-                            <label for="ShowMedian">Show Global Median</label>
-                          </div>
-                        <div class="barChart" id="barChart" style = "position: absolute; right:23%; top: 1500px;" ></div>
+                            <label for="ShowMedian" class="nunito">Show Global Median</label>
+                        </div>
+
+                        <button class="scroll-button" onclick="scrollToContent(750)" style="top: 1350px;"></button>
+
+                        <div class="barChart" id="barChart" style = "position: absolute; right:23%; top: 1600px;" ></div>
                         <div class="tooltip" id="barChartTooltip"></div>
-                        <p style = "position: absolute; right:23%; top: 1600px;">
-                            <select name="" id="category-select">
+                        <p style = "position: absolute; top: 1800px; left:130px;">
+                            <select name="" id="category-select" class="nunito">
                                 <option value="exercicio">Group by Workout per Week</option>
                                 <option value="sentimento">Group by Mood</option>
                                 <option value="sono">Group by Sleep</option>
