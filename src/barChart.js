@@ -63,7 +63,7 @@ export function barChart(id, data, options) {
 	})
 	console.log(groupedData)
 
-	if (cfg.category === "exercicio") {
+	if (cfg.category === "exercicio" | cfg.category === "sono") {
 		groupedData.push(groupedData.shift())
 	}
 

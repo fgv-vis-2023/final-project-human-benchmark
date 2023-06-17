@@ -18,26 +18,26 @@ import { PctBarChart } from './pctBarChart.js';
 fetch("../../firebaseConfig.json")
 .then(response => response.json())
 .then(config => {
-  console.log(config);
+  // console.log(config);
   initializeApp(config);
   
 const db = getFirestore();  // connect to firestore
 const auth = getAuth();  // connect to auth
 
-const signupForm = document.querySelector('#signup');
-signupForm.addEventListener('submit', (e) => {
-  e.preventDefault()
-  var username = signupForm.username.value.toString()
-  username = username.toLowerCase().replace(RegExp(' ', "g"), '_') + "@maildrop.cc"
-  createUserWithEmailAndPassword(auth, username, signupForm.password.value)
-    .then((userCredential) => {
-      console.log('User created, welcome', userCredential.user)
-      signupForm.reset()
-    })
-    .catch((error) => {
-      alert(error.message)
-    })
-})
+// const signupForm = document.querySelector('#signup');
+// signupForm.addEventListener('submit', (e) => {
+//   e.preventDefault()
+//   var username = signupForm.username.value.toString()
+//   username = username.toLowerCase().replace(RegExp(' ', "g"), '_') + "@maildrop.cc"
+//   createUserWithEmailAndPassword(auth, username, signupForm.password.value)
+//     .then((userCredential) => {
+//       console.log('User created, welcome', userCredential.user)
+//       signupForm.reset()
+//     })
+//     .catch((error) => {
+//       alert(error.message)
+//     })
+// })
 
 const logoutButton = document.querySelector('.logout');
 logoutButton.addEventListener('click', () => {
@@ -53,7 +53,6 @@ logoutButton.addEventListener('click', () => {
 const loginForm = document.querySelector('#login');
 loginForm.addEventListener('submit', (e) => {
   e.preventDefault()
-  console.log("AAAAAAA")
   var username = loginForm.username.value.toString()
   username = username.toLowerCase().replace(RegExp(' ', "g"), '_') + "@maildrop.cc"
 
