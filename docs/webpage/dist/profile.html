@@ -202,8 +202,8 @@
       </div>
   
       <button type="submit">Submit</button>
-      <button class="logout">Logout</button>
   </div>
+
 <!-- Popup message -->
 <div class="popup" id="popupMessage">
   <div class="popup-content">
@@ -213,16 +213,17 @@
 </div>
 
 <script>
-  document.querySelector(".info-form").addEventListener("submit", function (event) {
+  document.querySelector(".info-form").addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent form submission
 
+    // Hide the login form
+    document.querySelector(".info-container").style.display = "none";
+
+    // Show the popup message
+    const popup = document.getElementById("popupMessage");
     popup.classList.add("show");
-
-    // Reset the form
-    //document.querySelector(".info-form").reset();
   });
-</script>  
-
+</script>
 
 </body>
 <script src="../../login.js"></script>
