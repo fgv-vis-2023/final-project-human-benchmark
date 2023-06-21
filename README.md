@@ -18,7 +18,7 @@ For organizational purposes, the project was separated into three main "research
 
 As for the other deliverables, the poster was made by *Luis Laguardia*, the trailer was made by *Tiago Barradas* and the report was made by *Maisa Fraiz*, although with help from the other members.
 
-Regarding how to access MindTrack, you can visit the webpage hosted on GitHub Pages: 
+Regarding on how to access MindTrack, you can visit the webpage hosted on GitHub Pages: 
 
 https://fgv-vis-2023.github.io/final-project-human-benchmark/
 
