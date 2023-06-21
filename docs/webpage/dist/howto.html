@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MindTrack</title>
+
+    <meta name="description" content="description here">
+    <meta name="keywords" content="keywords,here">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700,800" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+
+    <style>
+        .nunito {
+            font-family: 'poppins', font-sans;
+        }
+
+        .border-b-1 {
+            border-bottom-width: 1px;
+        }
+
+        .border-l-1 {
+            border-left-width: 1px;
+        }
+
+        hover\:border-none:hover {
+            border-style: none;
+        }
+
+        #sidebar {
+            transition: ease-in-out all .3s;
+            z-index: 9999;
+        }
+
+        #sidebar span {
+            opacity: 0;
+            position: absolute;
+            transition: ease-in-out all .1s;
+        }
+
+        #sidebar:hover {
+            width: 150px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            /*shadow-2xl*/
+        }
+
+        #sidebar:hover span {
+            opacity: 1;
+        }
+    </style>
+
+</head>
+
+<body class="flex h-screen bg-gray-100 font-sans">
+
+    
+
+<!-- Side bar-->
+<div id="sidebar" class="h-screen w-16 menu bg-white text-white px-4 flex items-center nunito static fixed shadow">
+    <ul class="list-reset">
+        <li class="my-2 md:my-0">
+            <a href="/final-project-human-benchmark/index.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
+                <i class="fas fa-home fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Home</span>
+            </a>
+        </li>
+        
+        <li class="my-2 md:my-0">
+            <a href="howto.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
+                <i class="fas fa-question-circle fa-fw mr-3 text-indigo-400"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">How To</span>
+            </a>
+        </li>
+    
+    <li class="my-2 md:my-0">
+      <a href="tests.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
+          <i class="fa fa-brain fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Tests</span>
+      </a>
+      </li>
+
+      <li class="my-2 md:my-0 ">
+        <a href="profile.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
+            <i class="fas fa-user-circle fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Profile</span>
+        </a>
+    </li>
+    
+      <li class="my-2 md:my-0 ">
+        <a href="graphs.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
+            <i class="fas fa-chart-line fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Progress</span>
+        </a>
+    </li>
+
+        <li class="my-2 md:my-0">
+            <a href="specific_game_graph.html" class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-indigo-400">
+                <i class="fas fa-chart-bar fa-fw mr-3"></i><span class="w-full inline-block pb-1 md:pb-0 text-sm">Game <br> Graphs</s*pan>
+            </a>
+        </li>
+    </ul>
+</div>
+
+  <style>
+    .title-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .pesquisatitle {
+        font-size: 1.7rem;
+        margin-bottom: 2rem;
+        text-align: left;
+        margin-left: 100px;
+    }
+    
+    .pesquisatext {
+        text-align: justify;
+        font-size: 1.4rem;
+        margin-left: 100px;
+        margin-bottom: 1.3rem;
+    }
+
+    
+</style>
+
+</style>
+
+<!--Main Content-->
+<div class="title-container">
+    <div class="container mx-auto px-4">
+        <div class="mt-8">
+        <h3 class="pesquisatitle text-xl mt-2 text-gray-600 font-bold">How to use this website</h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-600">In our side bar, you can see six icons: <b>Home</b>, <b>How To</b>, <b>Tests</b>, <b>Profile</b>, <b>Progress</b> and <b>Game Graphs</b>.</h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-600"> In <b>Home</b>, you can get to know a little more about our project, our research, our references and even about us. Don't forget to scroll to the bottom!</h3>
+            <h3 class="pesquisatext text-xl mt-2 text-gray-600">The <b>Tests</b> page directs you to where our games take place. This is also where you'll have to make your account the first time you play, or login when you return to fill in our questions about your mood, sleep routine, and other data that will help us generate amazing visualizations for you!</h3> 
+            <h3 class="pesquisatext text-xl mt-2 text-gray-600">In <b>Profile</b>, you will need to login again, so you can see your visualizations. We have plans to make this part more integrated with the rest of the webpage, but for now, don't skip this part!</h3> 
+            <h3 class="pesquisatext text-xl mt-2 text-gray-600"> In <b>Progress</b> and <b>Game Graphs</b>, you can see the payoff for the data we've collected! If nothing appears for you, it might be because you forgot to login in the <b>Profile</b> section, or didn't play any games yet.</h3>
+            
+        </div>
+    
+</div>
+
+
+</body>
+</html>
