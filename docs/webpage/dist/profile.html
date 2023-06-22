@@ -217,6 +217,13 @@
   </div>
 </div>
 
+<div class="popup" id="popupMessage2">
+  <div class="popup-content">
+    <h3>Logout Successful!</h3>
+    <p>You have been logged out.</p>
+  </div>
+</div>
+
 <script>
   document.querySelector(".info-form").addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent form submission
@@ -226,6 +233,13 @@
 
     // Show the popup message
     const popup = document.getElementById("popupMessage");
+    popup.classList.add("show");
+  });
+</script>
+<script>
+  document.querySelector(".logout").addEventListener("click", function(event) {
+    // Show the popup message
+    const popup = document.getElementById("popupMessage2");
     popup.classList.add("show");
   });
 </script>
