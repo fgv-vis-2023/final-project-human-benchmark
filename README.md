@@ -2,6 +2,10 @@ This is the repository for the project "MindTrack" for the Data Visualization co
 
 For organizational purposes, the project was separated into three main "researches" points and three main "coding" points, divided among the three members.
 
+**Introduction:**
+
+[*Link for video*](https://clipchamp.com/watch/vwYtt8kmZxT)
+
 **Research:**
 
 + Research about cognitive tests, what are they, how to approach different tests. *This part was done by Maisa Fraiz.*
