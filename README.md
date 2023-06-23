@@ -12,7 +12,7 @@ This is the repository for the project "MindTrack" for the Data Visualization co
 
 ![Paper](FinalPaper.pdf)
 
-**Work Division:**
+**Work Division**
 
 For organizational purposes, the project was separated into three main "researches" points and three main "coding" points, divided among the three members.
 
