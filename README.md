@@ -1,7 +1,5 @@
 This is the repository for the project "MindTrack" for the Data Visualization course in Data Science.
 
-For organizational purposes, the project was separated into three main "researches" points and three main "coding" points, divided among the three members.
-
 **Video Introduction:**
 
 [*Link for video*](https://clipchamp.com/watch/vwYtt8kmZxT)
@@ -9,6 +7,8 @@ For organizational purposes, the project was separated into three main "research
 **Poster:**
 
 ![Poster](poster_small.jpg)
+
+For organizational purposes, the project was separated into three main "researches" points and three main "coding" points, divided among the three members.
 
 **Research:**
 
