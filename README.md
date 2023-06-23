@@ -10,7 +10,7 @@ This is the repository for the project "MindTrack" for the Data Visualization co
 
 **Paper:**
 
-![Paper](FinalPaper.pdf)
+[FinalPaper](FinalPaper.pdf)
 
 **Work Division**
 
