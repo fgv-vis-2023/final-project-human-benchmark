@@ -8,6 +8,10 @@ This is the repository for the project "MindTrack" for the Data Visualization co
 
 ![Poster](poster_small.jpg)
 
+**Paper:**
+
+![Paper](FinalPaper.pdf)
+
 For organizational purposes, the project was separated into three main "researches" points and three main "coding" points, divided among the three members.
 
 **Research:**
